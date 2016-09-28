@@ -31,6 +31,7 @@ repositories {
 }
 
 dependencies {
+	compile("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.0.2")
 }
 
 task createAllStartScripts() << {
