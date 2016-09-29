@@ -1,4 +1,5 @@
 - title: MQTT Tutorials
   tutorials:
-  - confirmed-delivery 
+  - persistence-with-queues
+  - confirmed-delivery
   - topic-to-queue-mapping
