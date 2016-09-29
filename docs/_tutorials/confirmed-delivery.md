@@ -110,8 +110,6 @@ cd {{ site.baseurl | remove: '/'}}
 
 ### Building
 
-### Building
-
 The project uses Gradle. To build, execute the following command.
 
 ```
