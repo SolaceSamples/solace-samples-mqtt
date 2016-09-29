@@ -1,3 +1,4 @@
-- title: Tutorials
+- title: MQTT Tutorials
   tutorials:
-  - tutorial-1
+  - confirmed-delivery 
+  - topic-to-queue-mapping
