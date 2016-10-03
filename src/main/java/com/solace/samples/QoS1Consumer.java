@@ -17,6 +17,8 @@
  * under the License.
  */
 
+package com.solace.samples;
+
 import java.sql.Timestamp;
 import java.util.concurrent.CountDownLatch;
 
@@ -34,7 +36,7 @@ import org.eclipse.paho.client.mqttv3.MqttCallback;
  *
  */
 public class QoS1Consumer {
-    
+
     public void run(String... args) {
         System.out.println("QoS1Consumer initializing...");
 
@@ -43,7 +45,7 @@ public class QoS1Consumer {
             MqttAsyncClient mqttClient = new MqttAsyncClient("tcp://" + args[0], "HelloWorldQoS1Consumer");
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
-            
+
             // Connect the client
             System.out.println("Connecting to Solace broker: tcp://" + args[0]);
             IMqttToken conToken = mqttClient.connect(connOpts);
@@ -56,7 +58,7 @@ public class QoS1Consumer {
 
             // Latch used for synchronizing b/w threads
             final CountDownLatch latch = new CountDownLatch(1);
-            
+
             // Callback - Anonymous inner-class for receiving messages
             mqttClient.setCallback(new MqttCallback() {
 
@@ -81,10 +83,10 @@ public class QoS1Consumer {
                 }
 
             });
-            
+
             // Topic filter the client will subscribe to
             final String subTopic = "Q/tutorial";
-            
+
             // Subscribe client to the topic filter with QoS level of 1
             System.out.println("Subscribing client to topic: " + subTopic);
             IMqttToken subToken = mqttClient.subscribe(subTopic, 1);
@@ -105,7 +107,7 @@ public class QoS1Consumer {
             } catch (InterruptedException e) {
                 System.out.println("I was awoken while waiting");
             }
-            
+
             // Disconnect the client
             mqttClient.disconnect();
             System.out.println("Exiting");
@@ -127,7 +129,7 @@ public class QoS1Consumer {
             System.out.println("Usage: QoS1Consumer <msg_backbone_ip:port>");
             System.exit(-1);
         }
-        
+
         QoS1Consumer app = new QoS1Consumer();
         app.run(args);
     }

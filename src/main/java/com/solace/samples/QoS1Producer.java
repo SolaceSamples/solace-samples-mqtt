@@ -17,6 +17,8 @@
  * under the License.
  */
 
+package com.solace.samples;
+
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -28,7 +30,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
  *
  */
 public class QoS1Producer {
-    
+
     public void run(String... args) {
         System.out.println("QoS1Producer initializing...");
 
@@ -37,7 +39,7 @@ public class QoS1Producer {
             MqttClient mqttClient = new MqttClient("tcp://" + args[0], "HelloWorldQoS1Producer");
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
-            
+
             // Connect the client
             System.out.println("Connecting to Solace broker: tcp://" + args[0]);
             mqttClient.connect(connOpts);
@@ -49,15 +51,15 @@ public class QoS1Producer {
             // Set the QoS on the Messages - 
             // Here we are using QoS of 1 (equivalent to Persistent Messages in Solace)
             message.setQos(1);
-            
+
             System.out.println("Publishing message: " + content);
-            
+
             // Publish the message
             mqttClient.publish("Q/tutorial", message);
-            
+
             // Disconnect the client
             mqttClient.disconnect();
-            
+
             System.out.println("Message published. Exiting");
 
             System.exit(0);

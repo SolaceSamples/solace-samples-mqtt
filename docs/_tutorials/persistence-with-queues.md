@@ -72,7 +72,7 @@ The two sections below can be added to your pom.xml to configure it use the Paho
 
 The simplest way to connect to a Solace message router in MQTT is to use an 'MqttClient', as done with other tutorials. So connect the 'MqttClient' as outlined in the [publish/subscribe tutorial]({{ site.baseurl }}/publish-subscribe).
 
-NOTE: If you use the default 'MqttConnectOptions', or set 'MqttConnectOptions.cleanSession' to 'true', as done in the publish/subscribe tutorial, then a Non-Durable (a.k.a. Temporary Endpoint) queue will automatically be created on the Solace message router when the client adds a QoS 1 subscription. Queues are used to store QoS 1 messages providing persistence for the 'MqttClient'. A Non-Durable queue is removed when the 'MqttClient' disconnects, which mean the Solace message router will not retain any messages for the client after it disconnects. Setting the 'MqttConnectOptions.cleanSession' to 'false' will create a Durable queue which will retain messages even after the client disconnects. You can learn more about Solace queue durability from the Endpoint Durability section of [Solace Messaging Platform Feature Guide – Working with Guaranteed Messages](https://sftp.solacesystems.com/Portal_Docs/#page/Solace_Messaging_Platform_Feature_Guide/Working_with_Guaranteed_Messages.html#).
+NOTE: If you use the default 'MqttConnectOptions', or set 'MqttConnectOptions.cleanSession' to 'true', as done in the publish/subscribe tutorial, then a Non-Durable (a.k.a. Temporary Endpoint) queue will automatically be created on the Solace message router when the client adds a QoS 1 subscription. Queues are used to store QoS 1 messages providing persistence for the 'MqttClient'. A Non-Durable queue is removed when the 'MqttClient' disconnects, which mean the Solace message router will not retain any messages for the client after it disconnects. Setting the 'MqttConnectOptions.cleanSession' to 'false' will create a Durable queue which will retain messages even after the client disconnects. You can learn more about Solace queue durability from the Endpoint Durability section of [Solace Messaging Platform Feature Guide – Working with Guaranteed Messages](https://sftp.solacesystems.com/Portal_Docs/#page/Solace_Messaging_Platform_Feature_Guide/Working_with_Guaranteed_Messages.html#){:target="_top"}.
 
 For the purpose of this tutorial and to clean up resources and state 'MqttConnectOptions.cleanSession' is set to 'true'.
 
@@ -87,7 +87,7 @@ First connect and subscribe to receive the messages sent to a QoS 1 subscription
 
 This tutorial uses Quality of Service (QoS) level of 1 (equivalent to Solace “Guaranteed” or “Persistent” messages), which are at least once delivery messages. So first, let’s express interest in the messages by subscribing to a topic filter.
 
-A topic filter in MQTT differs from a Solace SMF topic subscription. Users can learn more about the differences between the two in the Topic Names and Filters section of [MQTT Specification Conformance – Operational Behavior](https://sftp.solacesystems.com/Portal_Docs/#page/MQTT_Specification_Conformance/4_Operational_behavior.html).
+A topic filter in MQTT differs from a Solace SMF topic subscription. Users can learn more about the differences between the two in the Topic Names and Filters section of [MQTT Specification Conformance – Operational Behavior](https://sftp.solacesystems.com/Portal_Docs/#page/MQTT_Specification_Conformance/4_Operational_behavior.html){:target="_top"}.
 
 As with other tutorials, this tutorial receives messages asynchronously through callbacks. So define a callback using the 'MqttCallback' interface as outlined in the [publish/subscribe tutorial]({{ site.baseurl }}/publish-subscribe).
 
@@ -169,16 +169,7 @@ This builds all of the Java Samples with OS specific launch scripts. The files a
 If you start the 'QoS1Consumer' with a single argument for the Solace message router host address it will connect and wait for a message. Replace HOST with the host address of your Solace VMR.
 
 ~~~shell
-$ mvn exec:java -Dexec.args="HOST"
-[INFO] Scanning for projects...
-[INFO]
-[INFO] Using the builder org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder with a thread count of 1
-[INFO]
-[INFO] ------------------------------------------------------------------------
-[INFO] Building QoS1Consumer 0.0.1-SNAPSHOT
-[INFO] ------------------------------------------------------------------------
-[INFO]
-[INFO] --- exec-maven-plugin:1.4.0:java (default-cli) @ QoS1Consumer ---
+$ ./build/staged/bin/QoS1Consumer <HOST>
 QoS1Consumer initializing...
 Connecting to Solace broker: tcp://HOST
 Connected
@@ -197,16 +188,7 @@ Exiting
 Then you can send a message using the 'QoS1Producer' again using a single argument to specify the Solace message router HOST address. If successful, the output for the producer will look like the following:
 
 ~~~shell
-$ mvn exec:java -Dexec.args="HOST"
-[INFO] Scanning for projects...
-[INFO]
-[INFO] Using the builder org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder with a thread count of 1
-[INFO]
-[INFO] ------------------------------------------------------------------------
-[INFO] Building QoS1Producer 0.0.1-SNAPSHOT
-[INFO] ------------------------------------------------------------------------
-[INFO]
-[INFO] --- exec-maven-plugin:1.4.0:java (default-cli) @ QoS1Producer ---
+$ ./build/staged/bin/QoS1Producer <HOST>
 QoS1Producer initializing...
 Connecting to Solace broker: tcp://HOST
 Connected

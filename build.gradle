@@ -37,16 +37,20 @@ dependencies {
 task createAllStartScripts() << {
      // just a placeholder
 }
-  def scripts = [ 'confirmedDeliveryProducer':'com.solace.samples.ConfirmedDeliveryProducer'
+
+def scripts = [
+    'confirmedDeliveryProducer':'com.solace.samples.ConfirmedDeliveryProducer',
+    'QoS1Producer':'com.solace.samples.QoS1Producer',
+    'QoS1Consumer':'com.solace.samples.QoS1Consumer'
 ]
-  scripts.each() { scriptName, className ->
-          def t = tasks.create(name: scriptName+'StartScript', type: CreateStartScripts) {
+scripts.each() { scriptName, className ->
+    def t = tasks.create(name: scriptName+'StartScript', type: CreateStartScripts) {
         mainClassName = className
         applicationName = scriptName
         outputDir = new File(project.buildDir, 'scripts')
         classpath = jar.outputs.files + project.configurations.runtime
     }
-      applicationDistribution.into("bin") {
+    applicationDistribution.into("bin") {
             from(t)
             fileMode = 0755
 			duplicatesStrategy = DuplicatesStrategy.EXCLUDE
