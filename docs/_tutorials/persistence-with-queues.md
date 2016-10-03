@@ -45,28 +45,23 @@ As with other tutorials, this tutorial will connect to the default message VPN o
 
 ## Obtaining an MQTT Client Library
 
-Although, you can use any MQTT Client library of your choice to connect to Solace, this tutorial uses the Paho Java Client library. It will use Apache Maven to download and manage the MQTT dependencies.
+Although, you can use any MQTT Client library of your choice to connect to Solace, this tutorial uses the Paho Java Client library. Here are a few easy ways to get the Paho API. The instructions in the Building section assume you're using Gradle and pulling the jars from maven central. If your environment differs then adjust the build instructions appropriately.
 
-The two sections below can be added to your pom.xml to configure it use the Paho Java library from the Eclipse Nexus repository.
+### Get the API: Using Gradle
 
-~~~java
-<project ...>
-  <repositories>
-    <repository>
-        <id>Eclipse Paho Repo</id>
-        <url>https://repo.eclipse.org/content/repositories/paho-releases/</url>
-    </repository>
-  </repositories>
-  ...
-  <dependencies>
-    <dependency>
-        <groupId>org.eclipse.paho</groupId>
-        <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
-        <version>1.0.2</version>
-    </dependency>
-  </dependencies>
-</project>
-~~~
+```
+    compile("org.eclipse.paho:org.eclipse.paho.client.mqttv3:{{ site.paho_version }}")
+```
+
+### Get the API: Using Maven
+
+```
+<dependency>
+  <groupId>org.eclipse.paho</groupId>
+  <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+  <version>{{ site.paho_version }}</version>
+</dependency>
+```
 
 ## Connecting a session to the message router
 
@@ -214,7 +209,5 @@ If you have any issues sending and receiving a message, check the [Solace commun
 
 You have now successfully sent and received QoS 1 MQTT messages which are equivalent to Solace guaranteed messages.
 
-## Up Next:
 
-* [Learn how to enable effective message acknowlegdements](http://dev.solacesystems.com/get-started/mqtt-tutorials/confirmed-delivery_mqtt/){:target="_top"}.
 
