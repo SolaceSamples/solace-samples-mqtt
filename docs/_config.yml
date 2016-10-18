@@ -5,6 +5,7 @@ repository: https://github.com/SolaceSamples/solace-samples-mqtt
 
 # Also see _includes/intro.html to customize the description which gets included in index.html.
 
+paho_version: 1.1.0
 
 #----------------------------------------------------
 # Generally don't modify items below this point

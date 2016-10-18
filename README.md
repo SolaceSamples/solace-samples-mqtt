@@ -1,6 +1,35 @@
-# Solace Samples MQTT
+# Getting Started Examples
+## MQ Telemetry Transport (MQTT)
 
-TODO, fill me out.
+MQTT is a standard lightweight protocol for sending and receiving messages. As such, in addition to information provided on the Solace [developer portal](http://dev.solacesystems.com/tech/mqtt/), you may also look at some external sources for more details about MQTT. The following are good places to start
+
+- http://mqtt.org/
+- https://www.eclipse.org/paho/
+
+These tutorials will get you up to speed and sending messages with Solace technology as quickly as possible. There are two ways you can get a Solace Message Router:
+
+- If your company has Solace message routers deployed, contact your middleware team to obtain the host name or IP address of a Solace message router to test against, a username and password to access it, and a VPN in which you can produce and consume messages.
+- If you do not have access to a Solace message router, you will need to go through the “[Set up a VMR](http://dev.solacesystems.com/get-started/vmr-setup-tutorials/setting-up-solace-vmr/)” tutorial to download and install the software.
+
+## Contents
+
+This repository contains code and matching tutorial walk throughs for different basic scenarios. It is best to view the associated [tutorials home page](https://solacesamples.github.io/solace-samples-mqtt/).
+
+## Prerequisites
+
+There are no prerequisites. 
+
+## Build the Samples
+
+    ./gradlew build
+
+## Running the Samples
+
+To try individual samples, build the project from source and then run samples like the following:
+
+    ./build/staged/bin/topicPublisher <HOST>
+
+See the individual tutorials linked from the [tutorials home page](https://solacesamples.github.io/solace-samples-mqtt/) for full details which can walk you through the samples, what they do, and how to correctly run them to explore MQTT.
 
 ## Exploring the Samples
 

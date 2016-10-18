@@ -12,4 +12,7 @@ docs/_site
 
 # My ignore list
 .gradle/
+.classpath
+.project
+.settings
 build/
