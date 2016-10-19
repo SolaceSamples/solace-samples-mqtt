@@ -31,8 +31,8 @@ repositories {
 }
 
 dependencies {
-        compile("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.0.2")
-        compile("com.googlecode.json-simple:json-simple:1.1.1")
+	compile("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0")
+	compile("com.googlecode.json-simple:json-simple:1.1.1")
 }
 
 task createAllStartScripts() << {
@@ -40,10 +40,6 @@ task createAllStartScripts() << {
 }
   def scripts = [ 'topicPublisher':'com.solace.samples.TopicPublisher',
 				 'topicSubscriber':'com.solace.samples.TopicSubscriber',
-				 'queueProducer':'com.solace.samples.QueueProducer',
-				 'queueConsumer':'com.solace.samples.QueueConsumer',
-				 'basicRequestor':'com.solace.samples.BasicRequestor',
-				 'basicReplier':'com.solace.samples.BasicReplier',
 				 'confirmedPublish':'com.solace.samples.ConfirmedPublish',
 				 'topicToQueueMapping':'com.solace.samples.TopicToQueueMapping'
 ]
