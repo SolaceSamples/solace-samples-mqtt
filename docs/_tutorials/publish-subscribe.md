@@ -19,9 +19,9 @@ This tutorial assumes the following:
     *   Enabled client username
     *   Enabled MQTT services on port 1883
 
-One simple way to get access to a Solace message router is to start a Solace VMR load [as outlined here](http://docs.solacesystems.com/Solace-VMR-Set-Up/Starting-VMRs-for-the-First-Time/Setting-Up-an-Eval-VMR-in-AWS.htm). By default the Solace VMR will run with the "default" message VPN configured and ready for messaging and the MQTT service enabled on port 1883\. Going forward, this tutorial assumes that you are using the Solace VMR. If you are using a different Solace message router configuration, adapt the instructions to match your configuration.
+One simple way to get access to a Solace message router is to start a Solace VMR load [as outlined here](http://docs.solacesystems.com/Solace-VMR-Set-Up/Starting-VMRs-for-the-First-Time/Setting-Up-an-Eval-VMR-in-AWS.htm){:target="_top"}. By default the Solace VMR will run with the "default" message VPN configured and ready for messaging and the MQTT service enabled on port 1883\. Going forward, this tutorial assumes that you are using the Solace VMR. If you are using a different Solace message router configuration, adapt the instructions to match your configuration.
 
-Users can learn more details on enabling MQTT service on a Solace message router by referring to the [Solace Messaging Platform Feature Guide - Using MQTT](https://sftp.solacesystems.com/Portal_Docs/#page/Solace_Messaging_Platform_Feature_Guide/Using_MQTT.html).
+Users can learn more details on enabling MQTT service on a Solace message router by referring to the [Solace Messaging Platform Feature Guide - Using MQTT](https://sftp.solacesystems.com/Portal_Docs/#page/Solace_Messaging_Platform_Feature_Guide/Using_MQTT.html){:target="_top"}.
 
 ## Goals
 
@@ -34,8 +34,8 @@ The goal of this tutorial is to demonstrate the MQTT messaging interaction using
 
 MQTT is a standard lightweight protocol for sending and receiving messages. As such, in addition to information provided on the Solace developer portal, you may also look at some external sources for more details about MQTT. The following are good places to start
 
-1.  [http://mqtt.org/](http://mqtt.org/)
-2.  [https://www.eclipse.org/paho/](https://www.eclipse.org/paho/)
+1.  [http://mqtt.org/](http://mqtt.org/){:target="_blank"}
+2.  [https://www.eclipse.org/paho/](https://www.eclipse.org/paho/){:target="_blank"}
 
 ## Solace message router properties
 
@@ -57,11 +57,11 @@ In order to send or receive messages to a Solace message router, you need to kno
 
 <tr>
 
-<td width="133">Host</td>
+<td>Host</td>
 
-<td width="138">String of the form tcp://DNS_NAME or tcp://IP:PORT</td>
+<td>String of the form tcp://DNS_NAME or tcp://IP:PORT</td>
 
-<td width="379">This is the address clients use when connecting to the Solace message router to send and receive messages.
+<td>This is the address clients use when connecting to the Solace message router to send and receive messages.
 
 For a Solace VMR this there is only a single interface so the IP is the same as the management IP address.
 
@@ -73,31 +73,31 @@ For Solace message router appliances this is the host address of the message-bac
 
 <tr>
 
-<td width="133">Message VPN</td>
+<td>Message VPN</td>
 
-<td width="138">String</td>
+<td>String</td>
 
-<td width="379">The Solace message router Message VPN that this client should connect to. The simplest option is to use the "default" message-vpn which is present on all Solace message routers and fully enabled for message traffic on Solace VMRs.</td>
-
-</tr>
-
-<tr>
-
-<td width="133">Client Username</td>
-
-<td width="138">String</td>
-
-<td width="379">The client username. For the Solace VMR default message VPN, authentication is disabled by default, so this can be any value.</td>
+<td>The Solace message router Message VPN that this client should connect to. The simplest option is to use the "default" message-vpn which is present on all Solace message routers and fully enabled for message traffic on Solace VMRs.</td>
 
 </tr>
 
 <tr>
 
-<td width="133">Client Password</td>
+<td>Client Username</td>
 
-<td width="138">String</td>
+<td>String</td>
 
-<td width="379">The optional client password. For the Solace VMR default message VPN, authentication is disabled by default, so this can be any value or omitted.</td>
+<td>The client username. For the Solace VMR default message VPN, authentication is disabled by default, so this can be any value.</td>
+
+</tr>
+
+<tr>
+
+<td>Client Password</td>
+
+<td>String</td>
+
+<td>The optional client password. For the Solace VMR default message VPN, authentication is disabled by default, so this can be any value or omitted.</td>
 
 </tr>
 
@@ -113,13 +113,13 @@ To see the port number configured on your Solace message router and Message VPN 
 solace-vmr> show service
 ```
 
-See the [VMR getting started](http://docs.solacesystems.com/Solace-VMR-Set-Up/Starting-VMRs-for-the-First-Time/Setting-Up-an-Eval-VMR-in-AWS.htm) tutorial for default credentials and accounts. Then paste the above command into the CLI.
+See the [VMR getting started](http://docs.solacesystems.com/Solace-VMR-Set-Up/Starting-VMRs-for-the-First-Time/Setting-Up-an-Eval-VMR-in-AWS.htm){:target="_top"} tutorial for default credentials and accounts. Then paste the above command into the CLI.
 
 For the purposes of this tutorial, you will connect to the default message VPN of a Solace VMR so the only required information to proceed is the Solace VMR host string which this tutorial accepts as an argument.
 
 ## Obtaining an MQTT Client Library
 
-Although you can use any MQTT Client library of your choice to connect to Solace, this tutorial will be using the [Paho Java Client library](https://www.eclipse.org/paho/clients/java/). This tutorial will use Apache Maven to download and manage the MQTT dependencies.
+Although you can use any MQTT Client library of your choice to connect to Solace, this tutorial will be using the [Paho Java Client library](https://www.eclipse.org/paho/clients/java/){:target="_blank"}. This tutorial will use Apache Maven to download and manage the MQTT dependencies.
 
 The two sections below can be added to your pom.xml to configure it use the Paho Java library from the Eclipse Nexus repository.
 
@@ -163,7 +163,7 @@ At this point your client is connected to the Solace message router. You can use
 
 This tutorial uses Quality of Service (QoS) level of 0 (equivalent to Solace "Direct" messages), which are at most once delivery messages. So first, let's express interest in the messages by subscribing to a topic filter. Then you can look at publishing a matching message and see it received.
 
-With a session connected in the previous step, the next step is to use the MQTT client to subscribe to a topic filter to receive messages. A topic filter in MQTT differs from a Solace SMF topic subscription. Users can learn more about the differences between the two in the Topic Names and Topic Filters section of [MQTT Specification Conformance - Operational Behavior](https://sftp.solacesystems.com/Portal_Docs/#page/MQTT_Specification_Conformance/4_Operational_behavior.html#).
+With a session connected in the previous step, the next step is to use the MQTT client to subscribe to a topic filter to receive messages. A topic filter in MQTT differs from a Solace SMF topic subscription. Users can learn more about the differences between the two in the Topic Names and Topic Filters section of [MQTT Specification Conformance - Operational Behavior](https://sftp.solacesystems.com/Portal_Docs/#page/MQTT_Specification_Conformance/4_Operational_behavior.html#){:target="_top"}.
 
 Messages are received asynchronously through callbacks. These callbacks are defined in MQTT by the MqttCallback interface.
 
@@ -213,7 +213,7 @@ try {
 
 Now it is time to send a message to the waiting consumer.
 
-![pub-sub-sending-message](http://dev.solacesystems.com/wp-content/uploads/2015/08/pub-sub-sending-message-300x134.png)
+![pub-sub-sending-message](http://dev.solacesystems.com/wp-content/uploads/2015/08/pub-sub-sending-message-300x134.png){:target="_top"}
 
 To send a message, you must create a message using the MqttMessage class and set the QoS level. This tutorial will send a message to topic "T/GettingStarted/pubsub" with contents "Hello world from MQTT!" and a QoS level of 0, which are at most once delivery messages. We then use the MQTT client created earlier to publish the message
 
@@ -229,8 +229,8 @@ At this point the producer has sent a message to the Solace message router and y
 
 Combining the example source code shown above results in the following source code archive files:
 
-*   [TopicPublisher.zip](/wp-content/uploads/mqtt/TopicPublisher.zip)
-*   [TopicSubscriber.zip](/wp-content/uploads/mqtt/TopicSubscriber.zip)
+*   [TopicPublisher.java]({{ site.repository }}/blob/master/src/main/java/com/solace/samples/TopicPublisher.java){:target="_blank"}
+*   [TopicSubscriber.java]({{ site.repository }}/blob/master/src/main/java/com/solace/samples/TopicSubscriber.java){:target="_blank"}
 
 ### Building
 
@@ -246,7 +246,7 @@ cd TopicPublisher
 mvn clean compile
 ```
 
-### <a name="_Toc432765876"></a>Sample Output
+### Sample Output
 
 If you start the TopicSubscriber with a single argument for the Solace message router host address and MQTT TCP port configured on the router (default is 1883) it will connect and wait for a message. Replace HOST with the host address of your Solace VMR.
 
