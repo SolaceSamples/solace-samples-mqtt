@@ -7,6 +7,9 @@ repository: https://github.com/SolaceSamples/solace-samples-mqtt
 
 paho_version: 1.1.0
 
+# Links
+docs-vmr-setup: http://docs.solace.com/Solace-VMR-Set-Up/Setting-Up-VMRs.htm
+
 #----------------------------------------------------
 # Generally don't modify items below this point
 url: "solacesamples.github.io" # the base hostname & protocol for your site
