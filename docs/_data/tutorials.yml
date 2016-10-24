@@ -1,5 +1,6 @@
 - title: MQTT Tutorials
   tutorials:
+  - publish-subscribe
   - persistence-with-queues
   - confirmed-delivery
   - topic-to-queue-mapping
