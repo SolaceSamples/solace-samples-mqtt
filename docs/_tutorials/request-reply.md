@@ -53,13 +53,14 @@ This tutorial will be using the MQTT Quality of Service (QoS) level 0 to send an
 
 For request-response messaging to be successful it must be possible for the requestor to correlate the request with the subsequent response. In this tutorial two fields are added to the request message to enable request-reply correlation. The reply-to field can be used by the requestor to indicate a topic where the reply should be sent. A natural choice for this is to use a unique topic per client by requesting the Reply-To topic from Solace Message Routers, as described above in the Overview section.
 
-The second requirement is to be able to detect the reply message from the stream of incoming messages. This is accomplished adding a correlation-id field. Repliers can include the same correlation-id in a reply message to allow the requestor to detect the corresponding reply. The figure below outlines this exchange.
+The second requirement is to be able to detect the reply message from the stream of incoming messages. This is accomplished by adding a correlation-id field. Repliers can include the same correlation-id in a reply message to allow the requestor to detect the corresponding reply. The figure below outlines this exchange.
 
 ![](http://2vs7bv4aq50r1hyri14a8xkf.wpengine.netdna-cdn.com/wp-content/uploads/2015/07/Request-Reply_diagram-1.png)
 
 In this tutorial the payload of both the request and reply messages are formatted to JSON in order to add the reply-to field, the correlation-id field, and the message contents. You can use any payload format which both the requestor and replier understand, but for the purpose of this tutorial we choose JSON to structure the payload of the message and keep the tutorial simple. This tutorial will use the JSON-Simple Java library to both construct and parse the payload in JSON. The section below can be added to your pom.xml to configure the JSON-Simple dependency.
 
-<pre class="brush: plain; title: ; notranslate" title=""><project ...>
+```
+<project ...>
   ...
   <dependencies>
     <dependency>
@@ -69,14 +70,14 @@ In this tutorial the payload of both the request and reply messages are formatte
     </dependency>
   </dependencies>
 </project>
-</pre>
+```
 
 ## Obtaining an MQTT Client Library
 
-Although, you can use any MQTT Client library of your choice to connect to Solace, for the purposes of this tutorial, this tutorial will be using the [Paho Java Client library](https://www.eclipse.org/paho/clients/java/). This tutorial will use Apache Maven to download and manage the MQTT dependencies.
+Although you can use any MQTT Client library of your choice to connect to Solace, this tutorial will be using the [Paho Java Client library](https://www.eclipse.org/paho/clients/java/). This tutorial will use Apache Maven to download and manage the MQTT dependencies.
 
 The two sections below can be added to your pom.xml to configure it use the Paho Java library from the Eclipse Nexus repository.
-
+```
 <pre class="brush: plain; title: ; notranslate" title=""><project ...>
   <repositories>
     <repository>
@@ -94,19 +95,19 @@ The two sections below can be added to your pom.xml to configure it use the Paho
   </dependencies>
 </project>
 </pre>
-
-## Connecting a session to the message router
+```
+## Connecting a Session to the Message Router
 
 This tutorial builds on the `TopicPublisher` introduced in Publish-Subscribe with MQTT. So connect the `MqttClient` as outlined in the [Publish-Subscribe with MQTT](http://dev.solacesystems.com/get-started/mqtt-tutorials/publish-subscribe_mqtt/) tutorial.
 
-## Making a request
+## Making a Request
 
 First let’s look at the requestor. This is the application that will send the initial request message and wait for the reply.
 
 ![](http://2vs7bv4aq50r1hyri14a8xkf.wpengine.netdna-cdn.com/wp-content/uploads/2015/07/Request-Reply_diagram-2.png)
 
 The requestor must obtain the unique reply-to topic. Using Solace Message Routers, this can be accomplished by adding a subscription to the designated special topic `“$SYS/client/reply-to”`. The reply-to topic is received asynchronously through callbacks. These callbacks are defined in MQTT by the `MqttCallback` interface. The same callback is also used to receive the actual reply message. In order to distinguish between the two messages we inspect the topic string provided in the `MqttCallback.messageArrived` method.
-
+```
 <pre class="brush: plain; title: ; notranslate" title="">mqttClient.setCallback(new MqttCallback() {
     public void messageArrived(String topic, MqttMessage message) throws Exception {
         // If the topic is "$SYS/client/reply-to" then set our replyToTopic
@@ -136,19 +137,19 @@ The requestor must obtain the unique reply-to topic. Using Solace Message Router
     }
 });
 </pre>
-
+```
 Now the requestor can add the subscription to the special designated topic:
-
+```
 <pre class="brush: plain; title: ; notranslate" title="">mqttClient.subscribe("$SYS/client/reply-to", 0);
 </pre>
-
+```
 The requestor uses a semaphore to block the requestor thread until the reply-to message has been received. Once the reply-to message has been received, the topic is obtained from the payload of the message as shown above in the callback. You must then subscribe to the obtained reply-to topic in order to express interest in receiving responses. This tutorial uses a QoS level of 0 for at most once delivery for our response messages.
-
+```
 <pre class="brush: plain; title: ; notranslate" title="">mqttClient.subscribe(replyToTopic, 0);
 </pre>
-
+```
 At this point the requestor is ready to send request messages and receive responses.
-
+```
 <pre class="brush: plain; title: ; notranslate" title="">// Create the request payload in JSON format
 JSONObject obj = new JSONObject();
 obj.put("correlationId", UUID.randomUUID().toString());
@@ -163,23 +164,23 @@ reqMessage.setQos(0);
 // Publish the request message
 mqttClient.publish(requestTopic, reqMessage);
 </pre>
-
+```
 The requestor uses a semaphore to block the requestor thread until the response message has been received.
-
+```
 <pre class="brush: plain; title: ; notranslate" title="">try {
     latch.acquire(); // block here until message received
 } catch (InterruptedException e) {
     System.out.println("I was awoken while waiting");
 }
 </pre>
-
-## Replying to a request
+```
+## Replying to a Request
 
 Now it is time to receive the request and generate an appropriate reply.  
 ![Request-Reply_diagram-3](http://2vs7bv4aq50r1hyri14a8xkf.wpengine.netdna-cdn.com/wp-content/uploads/2015/07/Request-Reply_diagram-3.png)
 
-Similar to the requestor an `MqttClient` is created and connected to the Solace message router. Request messages are received asynchronously through callback defined by the `MqttCallback` interface. When a request message is received, the replier parses the payload of the message to a JSON object, constructs a reply message and adds the correlation-id field retrieved from the request payload. The reply message is published to the reply-to topic found in the body of the request message.
-
+Similar to the requestor, an `MqttClient` is created and connected to the Solace message router. Request messages are received asynchronously through callback defined by the `MqttCallback` interface. When a request message is received, the replier parses the payload of the message to a JSON object, constructs a reply message and adds the correlation-id field retrieved from the request payload. The reply message is published to the reply-to topic found in the body of the request message.
+```
 <pre class="brush: plain; title: ; notranslate" title="">mqttClient.setCallback(new MqttCallback() {
 
     public void messageArrived(String topic, MqttMessage message) throws Exception {
@@ -223,17 +224,17 @@ Similar to the requestor an `MqttClient` is created and connected to the Solace 
 
 });
 </pre>
-
+```
 Now the replier can add the topic subscription with a QoS level of 0, to express interest in receiving request messages.
-
+```
 <pre class="brush: plain; title: ; notranslate" title="">mqttClient.subscribe(requestTopic, 0);
 </pre>
-
+```
 Then after the subscription is added, the replier is started. At this point the replier is ready to receive messages and send responses to your waiting requestor.
 
 ## Summarizing
 
-Combining the example source code show above results in the following source code files:
+Combining the example source code shown above results in the following source code files:
 
 *   [BasicRequestor.zip](http://2vs7bv4aq50r1hyri14a8xkf.wpengine.netdna-cdn.com/wp-content/uploads/mqtt/BasicRequestor.zip)
 *   [BasicReplier.zip](http://2vs7bv4aq50r1hyri14a8xkf.wpengine.netdna-cdn.com/wp-content/uploads/mqtt/BasicReplier.zip)
@@ -243,18 +244,18 @@ Combining the example source code show above results in the following source cod
 Building these examples is simple. The following provides an example using Maven to compile and execute the sample. These instructions assume you have Apache Maven installed in your environment. There are many suitable ways to build and execute these samples in Java. Adapt these instructions to suit your needs depending on your environment.
 
 Extract both the archive files and run the below command in each directory to compile the samples:
-
+```
 <pre class="brush: plain; title: ; notranslate" title="">cd BasicRequestor
 mvn clean compile
 cd ..
 cd BasicReplier
 mvn clean compile
 </pre>
-
+```
 ### Sample Output
 
 If you start the `BasicReplier` with a single argument for the Solace message router host address it will connect and wait for a message. Replace HOST with the host address of your Solace VMR.
-
+```
 <pre class="brush: plain; title: ; notranslate" title="">$ mvn exec:java -Dexec.args="HOST"
 [INFO] Scanning for projects...
 [INFO]
@@ -271,9 +272,9 @@ Connected
 Subscribing client to request topic: T/GettingStarted/request
 Waiting for request message...
 </pre>
-
+```
 Then you can send a request message using the `BasicRequestor` again using a single argument to specify the Solace message router host address. If successful, the output for the requestor will look like the following:
-
+```
 <pre class="brush: plain; title: ; notranslate" title="">$ mvn exec:java -Dexec.args="HOST"
 [INFO] Scanning for projects...
 [INFO]
@@ -301,9 +302,9 @@ Received a response!
 
 Exiting
 </pre>
-
-With the message delivered the replier output will look like the following:
-
+```
+With the message delivered, the replier output will look like the following:
+```
 <pre class="brush: plain; title: ; notranslate" title="">Received a request message!
     Correl. Id: c6edf881-f211-4b3d-815f-87c3aeb95f22
     Reply To:   _P2P/v:solace-vmr/_mqtt/HelloWorldBasicRequestor/169
@@ -312,7 +313,7 @@ With the message delivered the replier output will look like the following:
 Sending response to: _P2P/v:solace-vmr/_mqtt/HelloWorldBasicRequestor/169
 Exiting
 </pre>
-
+```
 With that you now know how to successfully implement the request-reply message exchange pattern using MQTT.
 
 If you have any issues sending and receiving a message, check the [Solace community Q&A](/community) for answers to common issues seen.
