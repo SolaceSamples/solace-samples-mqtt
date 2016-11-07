@@ -12,6 +12,10 @@ links-community: http://dev.solace.com/community/
 docs-vmr-setup: http://docs.solace.com/Solace-VMR-Set-Up/Setting-Up-VMRs.htm
 docs-core-concepts: http://docs.solace.com/Features/Core-Concepts.htm
 docs-using-mqtt: http://docs.solace.com/Features/Using-MQTT.htm
+docs-ops-behavior: http://docs.solace.com/MQTT-311-Prtl-Conformance-Spec/Operational%20behavior.htm
+docs-gm-feature: http://docs.solace.com/Features/Working-With-Guaranteed-Messages.htm
+docs-topic-queue: http://docs.solace.com/Features/Core-Concepts.htm#topic-queue-mapping
+docs-managing-mqtt: http://docs.solace.com/Configuring-and-Managing-Routers/Managing-MQTT-Messaging.htm
 
 #----------------------------------------------------
 # Generally don't modify items below this point

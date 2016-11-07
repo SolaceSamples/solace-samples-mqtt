@@ -22,7 +22,7 @@ This tutorial assumes the following:
 
 One simple way to get access to a Solace message router is to start a Solace VMR load as [outlined here]({{ site.docs-vmr-setup }}){:target="_top"}. By default the Solace VMR will run with the “default” message VPN configured and ready for messaging and the MQTT service enabled on port 1883\. Going forward, this tutorial assumes that you are using the Solace VMR. If you are using a different Solace message router configuration, adapt the instructions to match your configuration.
 
-Users can learn more details on enabling MQTT service on a Solace message router by referring to the [Solace Messaging Platform Feature Guide – Using MQTT]({{ site.docs-using-mqtt }}){:target="_top"}.
+Users can learn more details on enabling MQTT service on a Solace message router by referring to the [Solace Docs – Using MQTT]({{ site.docs-using-mqtt }}){:target="_top"}.
 
 ## Goals
 
