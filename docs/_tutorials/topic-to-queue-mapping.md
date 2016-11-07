@@ -9,7 +9,7 @@ The goal of this tutorial is to show you how to make use of one of Solace’s ad
 
 ![topic-to-queue-mapping]({{ site.baseurl }}/images/topic-to-queue-mapping.png)
 
-In addition to spooling messages published directly to the queue, it is possible to add one or more topic subscriptions to a durable queue so that messages published to those topics are also delivered to and spooled by the queue. This is a powerful feature that enables queues to participate equally in point to point and publish / subscribe messaging models. More details about the [“Topic to Queue Mapping” feature here](http://docs.solacesystems.com/Features/Core-Concepts.htm#topic-queue-mapping){:target="_top"}.
+In addition to spooling messages published directly to the queue, it is possible to add one or more topic subscriptions to a durable queue so that messages published to those topics are also delivered to and spooled by the queue. This is a powerful feature that enables queues to participate equally in point to point and publish / subscribe messaging models. More details about the [“Topic to Queue Mapping” feature here]({{ stie.docs-topic-queue }}){:target="_top"}.
 
 The following diagram illustrates this feature.  
 <img src="{{ site.baseurl }}/images/topic-to-queue-mapping-detail.png" width="500" height="206" />
@@ -24,4 +24,4 @@ MQTT is a standard wireline protocol with a design goal of being a light weight 
 
 So in summary MQTT applications take advantage of this feature by using QoS 1 subscriptions. There is nothing further that they must do.
 
-If you have any issues or questions check the [Solace community](http://dev.solacesystems.com/community/){:target="_top"} for answers and discussions.
+If you have any issues or questions check the [Solace community]({{ site.links-community }}){:target="_top"} for answers and discussions.

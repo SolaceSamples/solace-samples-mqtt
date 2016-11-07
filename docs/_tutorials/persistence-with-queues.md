@@ -14,16 +14,16 @@ and receive QoS 1 messages using a Solace router.
 
 This tutorial assumes the following:
 
-*   You are familiar with Solace [core concepts](http://dev.solacesystems.com/docs/core-concepts/){:target="_top"}.
+*   You are familiar with Solace [core concepts]({{ site.docs-core-concepts }}){:target="_top"}.
 *   You have access to a running Solace message router with the following configuration:
     *   Enabled message VPN
     *   Enabled client username
     *   Client-profile enabled with guaranteed messaging permissions.
     *   Enabled MQTT service on port 1883
 
-One simple way to get access to a Solace message router is to start a Solace VMR load [as outlined here](http://dev.solacesystems.com/docs/get-started/setting-up-solace-vmr_vmware/){:target="_top"}. By default the Solace VMR will run with the “default” message VPN configured and ready for messaging and the MQTT service enabled on port 1883. Going forward, this tutorial assumes that you are using the Solace VMR. If you are using a different Solace message router configuration, adapt the instructions to match your configuration.
+One simple way to get access to a Solace message router is to start a Solace VMR load [as outlined here]({{ site.docs-vmr-setup }}){:target="_top"}. By default the Solace VMR will run with the “default” message VPN configured and ready for messaging and the MQTT service enabled on port 1883. Going forward, this tutorial assumes that you are using the Solace VMR. If you are using a different Solace message router configuration, adapt the instructions to match your configuration.
 
-You can learn more details on enabling MQTT service on a Solace message router by referring to the [Solace Messaging Platform Feature Guide - Using MQTT](https://sftp.solacesystems.com/Portal_Docs/#page/Solace_Messaging_Platform_Feature_Guide/Using_MQTT.html){:target="_top"}.
+You can learn more details on enabling MQTT service on a Solace message router by referring to the [Solace Messaging Platform Feature Guide - Using MQTT]({{ site.docs-using-mqtt }}){:target="_top"}.
 
 ## Goals
 
@@ -36,8 +36,8 @@ The goal of this tutorial is to understand the following:
 
 MQTT is a standard lightweight protocol for sending and receiving messages. As such, in addition to informatoin provided on the Solace developer portal, you may also look at some external sources for more details about MQTT. The following are good places to start
 
-1. [http://mqtt.org/](http://mqtt.org/)
-2. [https://www.eclipse.org/paho/](https://www.eclipse.org/paho/)
+1. [http://mqtt.org/](http://mqtt.org/){:target="_blank"}
+2. [https://www.eclipse.org/paho/](https://www.eclipse.org/paho/){:target="_blank"}
 
 ## Solace message router properties
 
@@ -67,7 +67,7 @@ Although, you can use any MQTT Client library of your choice to connect to Solac
 
 The simplest way to connect to a Solace message router in MQTT is to use an 'MqttClient', as done with other tutorials. So connect the 'MqttClient' as outlined in the [publish/subscribe tutorial]({{ site.baseurl }}/publish-subscribe).
 
-NOTE: If you use the default 'MqttConnectOptions', or set 'MqttConnectOptions.cleanSession' to 'true', as done in the publish/subscribe tutorial, then a Non-Durable (a.k.a. Temporary Endpoint) queue will automatically be created on the Solace message router when the client adds a QoS 1 subscription. Queues are used to store QoS 1 messages providing persistence for the 'MqttClient'. A Non-Durable queue is removed when the 'MqttClient' disconnects, which mean the Solace message router will not retain any messages for the client after it disconnects. Setting the 'MqttConnectOptions.cleanSession' to 'false' will create a Durable queue which will retain messages even after the client disconnects. You can learn more about Solace queue durability from the Endpoint Durability section of [Solace Messaging Platform Feature Guide – Working with Guaranteed Messages](https://sftp.solacesystems.com/Portal_Docs/#page/Solace_Messaging_Platform_Feature_Guide/Working_with_Guaranteed_Messages.html#){:target="_top"}.
+NOTE: If you use the default 'MqttConnectOptions', or set 'MqttConnectOptions.cleanSession' to 'true', as done in the publish/subscribe tutorial, then a Non-Durable (a.k.a. Temporary Endpoint) queue will automatically be created on the Solace message router when the client adds a QoS 1 subscription. Queues are used to store QoS 1 messages providing persistence for the 'MqttClient'. A Non-Durable queue is removed when the 'MqttClient' disconnects, which mean the Solace message router will not retain any messages for the client after it disconnects. Setting the 'MqttConnectOptions.cleanSession' to 'false' will create a Durable queue which will retain messages even after the client disconnects. You can learn more about Solace queue durability from the Endpoint Durability section of [Solace Features – Working with Guaranteed Messages]({{ site.docs-gm-feature }}){:target="_top"}.
 
 For the purpose of this tutorial and to clean up resources and state 'MqttConnectOptions.cleanSession' is set to 'true'.
 
@@ -82,7 +82,7 @@ First connect and subscribe to receive the messages sent to a QoS 1 subscription
 
 This tutorial uses Quality of Service (QoS) level of 1 (equivalent to Solace “Guaranteed” or “Persistent” messages), which are at least once delivery messages. So first, let’s express interest in the messages by subscribing to a topic filter.
 
-A topic filter in MQTT differs from a Solace SMF topic subscription. Users can learn more about the differences between the two in the Topic Names and Filters section of [MQTT Specification Conformance – Operational Behavior](https://sftp.solacesystems.com/Portal_Docs/#page/MQTT_Specification_Conformance/4_Operational_behavior.html){:target="_top"}.
+A topic filter in MQTT differs from a Solace SMF topic subscription. Users can learn more about the differences between the two in the Topic Names and Filters section of [MQTT Specification Conformance – Operational Behavior]({{ site.docs-ops-behavior }}){:target="_top"}.
 
 As with other tutorials, this tutorial receives messages asynchronously through callbacks. So define a callback using the 'MqttCallback' interface as outlined in the [publish/subscribe tutorial]({{ site.baseurl }}/publish-subscribe).
 
@@ -205,7 +205,7 @@ Exiting
 
 The received message is printed to the screen. The message contents were “Hello world from MQTT!” as expected with a QoS level of 1 and the output contains extra information about the Solace message that was received.
 
-If you have any issues sending and receiving a message, check the [Solace community](http://dev.solacesystems.com/community){:target="_top"} for answers to common issues seen.
+If you have any issues sending and receiving a message, check the [Solace community]({{ site.links-community }}){:target="_top"} for answers to common issues seen.
 
 You have now successfully sent and received QoS 1 MQTT messages which are equivalent to Solace guaranteed messages.
 

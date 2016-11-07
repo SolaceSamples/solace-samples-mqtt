@@ -13,16 +13,16 @@ This tutorial builds on the basic concepts introduced in [Persistence with MQTT]
 
 This tutorial assumes the following:
 
-*   You are familiar with Solace [core concepts](http://docs.solacesystems.com/Features/Core-Concepts.htm){:target="_top"}.
+*   You are familiar with Solace [core concepts]({{ site.docs-core-concepts }}){:target="_top"}.
 *   You have access to a running Solace message router with the following configuration:
     *   Enabled message VPN configured for guaranteed messaging support.
     *   Enabled client username
     *   Client-profile enabled with guaranteed messaging permissions.
     *   Enabled MQTT service on port 1883
 
-One simple way to get access to a Solace message router is to start a Solace VMR load as [outlined here](http://docs.solacesystems.com/Solace-VMR-Set-Up/Starting-VMRs-for-the-First-Time/Setting-Up-an-Eval-VMR-in-AWS.htm){:target="_top"}. By default the Solace VMR will run with the “default” message VPN configured and ready for messaging and the MQTT service enabled on port 1883\. Going forward, this tutorial assumes that you are using the Solace VMR. If you are using a different Solace message router configuration, adapt the instructions to match your configuration.
+One simple way to get access to a Solace message router is to start a Solace VMR load as [outlined here]({{ site.docs-vmr-setup }}){:target="_top"}. By default the Solace VMR will run with the “default” message VPN configured and ready for messaging and the MQTT service enabled on port 1883\. Going forward, this tutorial assumes that you are using the Solace VMR. If you are using a different Solace message router configuration, adapt the instructions to match your configuration.
 
-Users can learn more details on enabling MQTT service on a Solace message router by referring to the [Solace Messaging Platform Feature Guide – Using MQTT](http://docs.solacesystems.com/Features/Using-MQTT.htm){:target="_top"}.
+Users can learn more details on enabling MQTT service on a Solace message router by referring to the [Solace Messaging Platform Feature Guide – Using MQTT]({{ site.docs-using-mqtt }}){:target="_top"}.
 
 ## Goals
 
@@ -136,5 +136,5 @@ Exiting
 
 When the text “Message was successfully delivered to Solace” is printed on screen, you have confirmed that the published QoS 1 message has been delivered successfully to the broker.
 
-If you have any issues sending and receiving a message, check the [Solace community](http://dev.solacesystems.com/community/){:target="_top"} for answers to common issues.
+If you have any issues sending and receiving a message, check the [Solace community]({{ site.links-community }}){:target="_top"} for answers to common issues.
 
