@@ -32,6 +32,7 @@ repositories {
 
 dependencies {
 	compile("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0")
+	compile("com.googlecode.json-simple:json-simple:1.1.1")
 }
 
 task createAllStartScripts() << {
@@ -39,8 +40,12 @@ task createAllStartScripts() << {
 }
   def scripts = [ 'topicPublisher':'com.solace.samples.TopicPublisher',
 				 'topicSubscriber':'com.solace.samples.TopicSubscriber',
+				 'basicRequestor':'com.solace.samples.BasicRequestor',
+				 'basicReplier':'com.solace.samples.BasicReplier',
 				 'confirmedPublish':'com.solace.samples.ConfirmedPublish',
-				 'topicToQueueMapping':'com.solace.samples.TopicToQueueMapping'
+				 'topicToQueueMapping':'com.solace.samples.TopicToQueueMapping',
+ 			     'QoS1Producer':'com.solace.samples.QoS1Producer',
+    			 'QoS1Consumer':'com.solace.samples.QoS1Consumer'
 ]
   scripts.each() { scriptName, className ->
           def t = tasks.create(name: scriptName+'StartScript', type: CreateStartScripts) {
