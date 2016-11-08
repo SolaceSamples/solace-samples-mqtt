@@ -244,39 +244,36 @@ Then after the subscription is added, the replier is started. At this point the 
 
 ## Summarizing
 
-Combining the example source code shown above results in the following source code files:
+The full source code for this example is available on [GitHub]({{ site.repository }}){:target="_blank"}. If you combine the example source code shown above results in the following source:
 
 *   [BasicRequestor.java]({{ site.repository }}/blob/master/src/main/java/com/solace/samples/BasicRequestor.java){:target="_blank"}
 *   [BasicRequestor.java]({{ site.repository }}/blob/master/src/main/java/com/solace/samples/BasicReplier.java){:target="_blank"}
 
+### Getting the Source
+
+Clone the GitHub repository containing the Solace samples.
+
+```
+git clone {{ site.repository }}
+cd {{ site.baseurl | remove: '/'}}
+```
+
 ### Building
 
-Building these examples is simple. The following provides an example using Maven to compile and execute the sample. These instructions assume you have Apache Maven installed in your environment. There are many suitable ways to build and execute these samples in Java. Adapt these instructions to suit your needs depending on your environment.
-
-Extract both the archive files and run the below command in each directory to compile the samples:
+The project uses Gradle. To build, execute the following command.
 
 ```
-cd BasicRequestor
-mvn clean compile
-cd ..
-cd BasicReplier
-mvn clean compile
+./gradlew build
 ```
+
+This builds all of the Java Samples with OS specific launch scripts. The files are staged in the `build/staged` directory.
+
 ### Sample Output
 
-If you start the `BasicReplier` with a single argument for the Solace message router host address it will connect and wait for a message. Replace HOST with the host address of your Solace VMR.
+If you start the `basicReplier` with a single argument for the Solace message router host address it will connect and wait for a message. Replace HOST with the host address of your Solace VMR.
 
 ```
-$ mvn exec:java -Dexec.args="HOST"
-[INFO] Scanning for projects...
-[INFO]
-[INFO] Using the builder org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder with a thread count of 1
-[INFO]
-[INFO] ------------------------------------------------------------------------
-[INFO] Building BasicReplier 0.0.1-SNAPSHOT
-[INFO] ------------------------------------------------------------------------
-[INFO]
-[INFO] --- exec-maven-plugin:1.4.0:java (default-cli) @ BasicReplier ---
+$ ./build/staged/bin/basicReplier <HOST>
 BasicReplier initializing...
 Connecting to Solace broker: tcp://HOST
 Connected
@@ -284,19 +281,10 @@ Subscribing client to request topic: T/GettingStarted/request
 Waiting for request message...
 ```
 
-Then you can send a request message using the `BasicRequestor` again using a single argument to specify the Solace message router host address. If successful, the output for the requestor will look like the following:
+Then you can send a request message using the `basicRequestor` again using a single argument to specify the Solace message router host address. If successful, the output for the requestor will look like the following:
 
 ```
-$ mvn exec:java -Dexec.args="HOST"
-[INFO] Scanning for projects...
-[INFO]
-[INFO] Using the builder org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder with a thread count of 1
-[INFO]
-[INFO] ------------------------------------------------------------------------
-[INFO] Building BasicRequestor 0.0.1-SNAPSHOT
-[INFO] ------------------------------------------------------------------------
-[INFO]
-[INFO] --- exec-maven-plugin:1.4.0:java (default-cli) @ BasicRequestor ---
+$ ./build/staged/bin/basicRequestor <HOST>
 BasicRequestor initializing...
 Connecting to Solace broker: tcp://HOST
 Connected

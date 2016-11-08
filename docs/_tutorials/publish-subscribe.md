@@ -196,60 +196,54 @@ At this point the producer has sent a message to the Solace message router and y
 
 ## Summarizing
 
-Combining the example source code shown above results in the following source code archive files:
+The full source code for this example is available on [GitHub]({{ site.repository }}){:target="_blank"}. If you combine the example source code shown above results in the following source:
 
 *   [TopicPublisher.java]({{ site.repository }}/blob/master/src/main/java/com/solace/samples/TopicPublisher.java){:target="_blank"}
 *   [TopicSubscriber.java]({{ site.repository }}/blob/master/src/main/java/com/solace/samples/TopicSubscriber.java){:target="_blank"}
 
+### Getting the Source
+
+Clone the GitHub repository containing the Solace samples.
+
+```
+git clone {{ site.repository }}
+cd {{ site.baseurl | remove: '/'}}
+```
+
 ### Building
 
-Building these examples is simple. The following provides an example using Maven to compile and execute the sample. These instructions assume you have Apache Maven installed in your environment. There are many suitable ways to build and execute these samples in Java. Adapt these instructions to suit your needs depending on your environment.
-
-Extract both the archive files and run the below command in each directory to compile the samples:
+The project uses Gradle. To build, execute the following command.
 
 ```
-cd TopicSubscriber
-mvn clean compile
-cd ..
-cd TopicPublisher
-mvn clean compile
+./gradlew build
 ```
+
+This builds all of the Java Samples with OS specific launch scripts. The files are staged in the `build/staged` directory.
+
+### Running the Sample
+
+Run the example from the command line as follows.
+
+```
+$ ./build/staged/bin/confirmedDeliveryProducer <HOST>
 
 ### Sample Output
 
-If you start the TopicSubscriber with a single argument for the Solace message router host address and MQTT TCP port configured on the router (default is 1883) it will connect and wait for a message. Replace HOST with the host address of your Solace VMR.
+If you start the `topicSubscriber` with a single argument for the Solace message router host address and MQTT TCP port configured on the router (default is 1883) it will connect and wait for a message. Replace HOST with the host address of your Solace VMR.
 
 ```
-$ mvn exec:java -Dexec.args="HOST:1883"
-[INFO] Scanning for projects...
-[INFO]
-[INFO] Using the builder org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder with a thread count of 1
-[INFO]
-[INFO] ------------------------------------------------------------------------
-[INFO] Building TopicSubscriber 0.0.1-SNAPSHOT
-[INFO] ------------------------------------------------------------------------
-[INFO]
-[INFO] --- exec-maven-plugin:1.4.0:java (default-cli) @ TopicSubscriber ---
+$ ./build/staged/bin/topicSubscriber <HOST>
 TopicSubscriber initializing...
 Connecting to Solace broker: tcp://HOST:1883
 Connected
 Subscribing client to topic: T/GettingStarted/pubsub
 ```
 
-Then you can send a message using the TopicPublisher again using a single argument to specify the Solace message router host address. If successful, the output for the producer will look like the following:
+Then you can send a message using the `topicPublisher` again using a single argument to specify the Solace message router host address. If successful, the output for the producer will look like the following:
 
 ```
-$ mvn exec:java -Dexec.args="HOST:1883"
-[INFO] Scanning for projects...
-[INFO]
-[INFO] Using the builder org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder with a thread count of 1
-[INFO]
-[INFO] ------------------------------------------------------------------------
-[INFO] Building TopicPublisher 0.0.1-SNAPSHOT
-[INFO] ------------------------------------------------------------------------
-[INFO]
-[INFO] --- exec-maven-plugin:1.4.0:java (default-cli) @ TopicPublisher ---
-TopicPublisher initializing...
+$ ./build/staged/bin/topicPublisher <HOST>
+opicPublisher initializing...
 Connecting to Solace broker: tcp://HOST:1883
 Connected
 Publishing message: Hello world from MQTT!
