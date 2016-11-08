@@ -1,7 +1,7 @@
 # Getting Started Examples
 ## MQ Telemetry Transport (MQTT)
 
-MQTT is a standard lightweight protocol for sending and receiving messages. As such, in addition to information provided on the Solace [developer portal](http://dev.solacesystems.com/tech/mqtt/), you may also look at some external sources for more details about MQTT. The following are good places to start
+MQTT is a standard lightweight protocol for sending and receiving messages. As such, in addition to information provided on the Solace [developer portal](http://dev.solace.com/tech/mqtt/), you may also look at some external sources for more details about MQTT. The following are good places to start
 
 - http://mqtt.org/
 - https://www.eclipse.org/paho/
@@ -9,7 +9,7 @@ MQTT is a standard lightweight protocol for sending and receiving messages. As s
 These tutorials will get you up to speed and sending messages with Solace technology as quickly as possible. There are two ways you can get a Solace Message Router:
 
 - If your company has Solace message routers deployed, contact your middleware team to obtain the host name or IP address of a Solace message router to test against, a username and password to access it, and a VPN in which you can produce and consume messages.
-- If you do not have access to a Solace message router, you will need to go through the “[Set up a VMR](http://dev.solacesystems.com/get-started/vmr-setup-tutorials/setting-up-solace-vmr/)” tutorial to download and install the software.
+- If you do not have access to a Solace message router, you will need to go through the “[Set up a VMR](http://docs.solace.com/Solace-VMR-Set-Up/Setting-Up-VMRs.htm)” tutorial to download and install the software.
 
 ## Contents
 
