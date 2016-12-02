@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/SolaceSamples/solace-samples-mqtt.svg?branch=master)](https://travis-ci.org/SolaceSamples/solace-samples-mqtt)
+
 # Getting Started Examples
 ## MQ Telemetry Transport (MQTT)
 
