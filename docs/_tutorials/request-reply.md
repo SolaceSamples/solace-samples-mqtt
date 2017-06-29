@@ -1,7 +1,7 @@
 ---
 layout: tutorials
 title: Request/Reply
-summary: This is a short description for the landing page.
+summary: Learn how to set up request/reply messaging.
 icon: request-reply.png
 ---
 
