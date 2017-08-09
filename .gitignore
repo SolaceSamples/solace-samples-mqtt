@@ -11,3 +11,4 @@ docs/_site
 .project
 .settings
 build/
+.idea
