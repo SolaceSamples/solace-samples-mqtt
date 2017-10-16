@@ -2,12 +2,10 @@
 layout: tutorials
 title: Confirmed Delivery
 summary: Learn how to confirm that your messages are received by a Solace message router.
-icon: confirmed-delivery.png
+icon: I_dev_confirm.svg
 ---
 
 This tutorial builds on the basic concepts introduced in [Persistence with MQTT]({{ site.baseurl }}/persistence-with-queues) tutorial and will show you how to properly process publisher acknowledgements. When you receive an acknowledgement for a QoS level 1 message, you have confirmed your message have been properly accepted by the Solace message router and therefore can be guaranteed of no message loss.
-
-![confirmed-delivery]({{ site.baseurl }}/images/confirmed-delivery.png)
 
 ## Assumptions
 
@@ -137,4 +135,3 @@ Exiting
 When the text “Message was successfully delivered to Solace” is printed on screen, you have confirmed that the published QoS 1 message has been delivered successfully to the broker.
 
 If you have any issues sending and receiving a message, check the [Solace community]({{ site.links-community }}){:target="_top"} for answers to common issues.
-

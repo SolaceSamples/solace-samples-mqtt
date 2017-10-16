@@ -2,13 +2,11 @@
 layout: tutorials
 title: Persistence with Queues
 summary: Learn how to set up persistence for guaranteed delivery.
-icon: persistence-tutorial.png
+icon: I_dev_Persistent.svg
 ---
 
 This tutorial builds on the basic concepts introduced in the [publish/subscribe tutorial]({{ site.baseurl }}/publish-subscribe), and will show you how to send
 and receive QoS 1 messages using a Solace router.
-
-![]({{ site.baseurl }}/images/persistence-tutorial.png)
 
 ## Assumptions
 
@@ -208,6 +206,3 @@ The received message is printed to the screen. The message contents were “Hell
 If you have any issues sending and receiving a message, check the [Solace community]({{ site.links-community }}){:target="_top"} for answers to common issues seen.
 
 You have now successfully sent and received QoS 1 MQTT messages which are equivalent to Solace guaranteed messages.
-
-
-
