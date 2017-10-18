@@ -1,5 +1,6 @@
 # Site settings
 title: Solace Samples MQTT
+summary: These tutorials get you up to speed sending and receiving messages with Solace technology.
 baseurl: "/solace-samples-mqtt" # the subpath of your site, e.g. /solace-samples-java
 repository: https://github.com/SolaceSamples/solace-samples-mqtt
 
