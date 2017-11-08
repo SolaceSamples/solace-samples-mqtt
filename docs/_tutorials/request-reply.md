@@ -3,6 +3,11 @@ layout: tutorials
 title: Request/Reply
 summary: Learn how to set up request/reply messaging.
 icon: I_dev_R+R.svg
+links:
+    - label: BasicRequestor.java
+      link: /blob/master/src/main/java/com/solace/samples/BasicRequestor.java
+    - label: BasicReplier.java
+      link: /blob/master/src/main/java/com/solace/samples/BasicReplier.java
 ---
 
 This tutorial outlines both roles in the request-response message exchange pattern. It will show you how to act as the client by creating a request, sending it and waiting for the response. It will also show you how to act as the server by receiving incoming requests, creating a reply and sending it back to the client. It builds on the basic concepts introduced in [publish/subscribe tutorial]({{ site.baseurl }}/publish-subscribe).
@@ -12,14 +17,18 @@ This tutorial outlines both roles in the request-response message exchange patte
 This tutorial assumes the following:
 
 *   You are familiar with Solace [core concepts]({{ site.docs-core-concepts }}){:target="_top"}.
-*   You have access to a running Solace message router with the following configuration:
-    *   Enabled message VPN
-    *   Enabled client username
-    *   Enabled MQTT services on port 1883
+*   You have access to Solace messaging with the following configuration details:
+    *   Connectivity information for a Solace message-VPN
+    *   Enabled client username and password
+    *   Enabled MQTT services
 
-One simple way to get access to a Solace message router is to start a Solace VMR load [as outlined here]({{ site.docs-vmr-setup }}){:target="_top"}. By default the Solace VMR will run with the “default” message VPN configured and ready for messaging and the MQTT service enabled on port 1883\. Going forward, this tutorial assumes that you are using the Solace VMR. If you are using a different Solace message router configuration, adapt the instructions to match your configuration.
+{% if jekyll.environment == 'solaceCloud' %}
+One simple way to get access to Solace messaging quickly is to create a messaging service in Solace Cloud [as outlined here]({{ site.links-solaceCloud-setup}}){:target="_top"}. You can find other ways to get access to Solace messaging on the [home page]({{ site.baseurl }}/) of these tutorials.
+{% else %}
+One simple way to get access to a Solace message router is to start a Solace VMR load [as outlined here]({{ site.docs-vmr-setup }}){:target="_top"}. By default the Solace VMR will with the “default” message VPN configured and ready for guaranteed messaging. Going forward, this tutorial assumes that you are using the Solace VMR. If you are using a different Solace message router configuration adapt the tutorial appropriately to match your configuration.
 
-Users can learn more details on enabling MQTT service on a Solace message router by referring to the [Solace Docs - Using MQTT]({{ site.docs-using-mqtt }}){:target="_top"}.
+You can learn more details on enabling MQTT service on a Solace message router by referring to the [Solace Docs - Using MQTT]({{ site.docs-using-mqtt }}){:target="_top"}.
+{% endif %}
 
 ## Goals
 
@@ -49,7 +58,7 @@ This tutorial will be using the MQTT Quality of Service (QoS) level 0 to send an
 
 ### Message Correlation
 
-For request-response messaging to be successful it must be possible for the requestor to correlate the request with the subsequent response. In this tutorial two fields are added to the request message to enable request-reply correlation. The reply-to field can be used by the requestor to indicate a topic where the reply should be sent. A natural choice for this is to use a unique topic per client by requesting the Reply-To topic from Solace Message Routers, as described above in the Overview section.
+For request-response messaging to be successful it must be possible for the requestor to correlate the request with the subsequent response. In this tutorial two fields are added to the request message to enable request-reply correlation. The reply-to field can be used by the requestor to indicate a topic where the reply should be sent. A natural choice for this is to use a unique topic per client by requesting the Reply-To topic from Solace messaging, as described above in the Overview section.
 
 The second requirement is to be able to detect the reply message from the stream of incoming messages. This is accomplished by adding a correlation-id field. Repliers can include the same correlation-id in a reply message to allow the requestor to detect the corresponding reply. The figure below outlines this exchange.
 
@@ -70,32 +79,14 @@ In this tutorial the payload of both the request and reply messages are formatte
 </project>
 ```
 
-## Obtaining an MQTT Client Library
+{% if jekyll.environment == 'solaceCloud' %}
+  {% include solaceMessaging-cloud.md %}
+{% else %}
+    {% include solaceMessaging.md %}
+{% endif %}  
+{% include mqttApi.md %}
 
-Although you can use any MQTT Client library of your choice to connect to Solace, this tutorial will be using the [Paho Java Client library](https://www.eclipse.org/paho/clients/java/){:target="_blank"}. This tutorial will use Apache Maven to download and manage the MQTT dependencies.
-
-The two sections below can be added to your pom.xml to configure it use the Paho Java library from the Eclipse Nexus repository.
-
-```
-<project ...>
-  <repositories>
-    <repository>
-        <id>Eclipse Paho Repo</id>
-        <url>https://repo.eclipse.org/content/repositories/paho-releases/</url>
-    </repository>
-  </repositories>
-  ...
-  <dependencies>
-    <dependency>
-        <groupId>org.eclipse.paho</groupId>
-        <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
-        <version>1.0.2</version>
-    </dependency>
-  </dependencies>
-</project>
-```
-
-## Connecting a Session to the Message Router
+## Connecting a Session to Solace Messaging
 
 This tutorial builds on the `TopicPublisher` introduced in Publish-Subscribe with MQTT. So connect the `MqttClient` as outlined in the [Publish-Subscribe with MQTT]({{ site.baseurl }}/publish-subscribe) tutorial.
 
@@ -105,7 +96,7 @@ First let’s look at the requestor. This is the application that will send the 
 
 ![]({{ site.baseurl }}/images/Request-Reply_diagram-2.png)
 
-The requestor must obtain the unique reply-to topic. Using Solace Message Routers, this can be accomplished by adding a subscription to the designated special topic `“$SYS/client/reply-to”`. The reply-to topic is received asynchronously through callbacks. These callbacks are defined in MQTT by the `MqttCallback` interface. The same callback is also used to receive the actual reply message. In order to distinguish between the two messages we inspect the topic string provided in the `MqttCallback.messageArrived` method.
+The requestor must obtain the unique reply-to topic. Using Solace Messaging, this can be accomplished by adding a subscription to the designated special topic `“$SYS/client/reply-to”`. The reply-to topic is received asynchronously through callbacks. These callbacks are defined in MQTT by the `MqttCallback` interface. The same callback is also used to receive the actual reply message. In order to distinguish between the two messages we inspect the topic string provided in the `MqttCallback.messageArrived` method.
 
 ```java
 mqttClient.setCallback(new MqttCallback() {
@@ -185,7 +176,7 @@ Now it is time to receive the request and generate an appropriate reply.
 ![]({{ site.baseurl }}/images/Request-Reply_diagram-3.png)
 
 
-Similar to the requestor, an `MqttClient` is created and connected to the Solace message router. Request messages are received asynchronously through callback defined by the `MqttCallback` interface. When a request message is received, the replier parses the payload of the message to a JSON object, constructs a reply message and adds the correlation-id field retrieved from the request payload. The reply message is published to the reply-to topic found in the body of the request message.
+Similar to the requestor, an `MqttClient` is created and connected to Solace messaging. Request messages are received asynchronously through callback defined by the `MqttCallback` interface. When a request message is received, the replier parses the payload of the message to a JSON object, constructs a reply message and adds the correlation-id field retrieved from the request payload. The reply message is published to the reply-to topic found in the body of the request message.
 
 ```java
 mqttClient.setCallback(new MqttCallback() {
@@ -244,8 +235,11 @@ Then after the subscription is added, the replier is started. At this point the 
 
 The full source code for this example is available on [GitHub]({{ site.repository }}){:target="_blank"}. If you combine the example source code shown above results in the following source:
 
-*   [BasicRequestor.java]({{ site.repository }}/blob/master/src/main/java/com/solace/samples/BasicRequestor.java){:target="_blank"}
-*   [BasicRequestor.java]({{ site.repository }}/blob/master/src/main/java/com/solace/samples/BasicReplier.java){:target="_blank"}
+<ul>
+{% for item in page.links %}
+<li><a href="{{ site.repository }}{{ item.link }}" target="_blank">{{ item.label }}</a></li>
+{% endfor %}
+</ul>
 
 ### Getting the Source
 
@@ -268,23 +262,23 @@ This builds all of the Java Samples with OS specific launch scripts. The files a
 
 ### Sample Output
 
-If you start the `basicReplier` with a single argument for the Solace message router host address it will connect and wait for a message. Replace HOST with the host address of your Solace VMR.
+If you start the `basicReplier` with arguments specifying your Solace messaging connection details, it will connect and wait for a message. Replace HOST with the host address of your Solace VMR.
 
 ```
-$ ./build/staged/bin/basicReplier <HOST>
+$ ./build/staged/bin/basicReplier <host:port> <client-username> <client-password>
 BasicReplier initializing...
-Connecting to Solace broker: tcp://HOST
+Connecting to Solace messaging at <host:port>
 Connected
 Subscribing client to request topic: T/GettingStarted/request
 Waiting for request message...
 ```
 
-Then you can send a request message using the `basicRequestor` again using a single argument to specify the Solace message router host address. If successful, the output for the requestor will look like the following:
+Then you can send a request message using the `basicRequestor` with the same arguments. If successful, the output for the requestor will look like the following:
 
 ```
-$ ./build/staged/bin/basicRequestor <HOST>
+$ ./build/staged/bin/basicRequestor <host:port> <client-username> <client-password>
 BasicRequestor initializing...
-Connecting to Solace broker: tcp://HOST
+Connecting to Solace messaging at <host:port>
 Connected
 Requesting Reply-To topic from Solace...
 

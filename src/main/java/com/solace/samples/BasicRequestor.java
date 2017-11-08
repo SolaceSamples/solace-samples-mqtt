@@ -47,14 +47,24 @@ public class BasicRequestor {
     public void run(String... args) {
         System.out.println("BasicRequestor initializing...");
 
+        String host = args[0];
+        String username = args[1];
+        String password = args[2];
+
+        if (!host.startsWith("tcp://")) {
+            host = "tcp://" + host;
+        }
+
         try {
             // Create an Mqtt client
-            final MqttClient mqttClient = new MqttClient("tcp://" + args[0], "HelloWorldBasicRequestor");
+            final MqttClient mqttClient = new MqttClient(host, "HelloWorldBasicRequestor");
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
+            connOpts.setUserName(username);
+            connOpts.setPassword(password.toCharArray());
             
             // Connect the client
-            System.out.println("Connecting to Solace broker: tcp://" + args[0]);
+            System.out.println("Connecting to Solace messaging at " + host);
             mqttClient.connect(connOpts);
             System.out.println("Connected");
 
@@ -93,7 +103,7 @@ public class BasicRequestor {
                 }
 
                 public void connectionLost(Throwable cause) {
-                    System.out.println("Connection to Solace broker lost!" + cause.getMessage());
+                    System.out.println("Connection to Solace messaging lost!" + cause.getMessage());
                     latch.release();
                 }
                 
@@ -164,12 +174,12 @@ public class BasicRequestor {
 
     public static void main(String[] args) {
         // Check command line arguments
-        if (args.length < 1) {
-            System.out.println("Usage: BasicRequestor <msg_backbone_ip:port>");
+        if (args.length != 3) {
+            System.out.println("Usage: basicRequestor <host:port> <client-username> <client-password>");
+            System.out.println();
             System.exit(-1);
         }
         
-        BasicRequestor app = new BasicRequestor();
-		app.run(args);
+        new BasicRequestor().run(args);
     }
 }

@@ -39,14 +39,24 @@ public class TopicSubscriber {
     public void run(String... args) {
         System.out.println("TopicSubscriber initializing...");
 
+        String host = args[0];
+        String username = args[1];
+        String password = args[2];
+
+        if (!host.startsWith("tcp://")) {
+            host = "tcp://" + host;
+        }
+
         try {
             // Create an Mqtt client
-            MqttClient mqttClient = new MqttClient("tcp://" + args[0], "HelloWorldSub");
+            MqttClient mqttClient = new MqttClient(host, "HelloWorldSub");
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
+            connOpts.setUserName(username);
+            connOpts.setPassword(password.toCharArray());
             
             // Connect the client
-            System.out.println("Connecting to Solace broker: tcp://" + args[0]);
+            System.out.println("Connecting to Solace messaging at "+host);
             mqttClient.connect(connOpts);
             System.out.println("Connected");
 
@@ -72,7 +82,7 @@ public class TopicSubscriber {
                 }
 
                 public void connectionLost(Throwable cause) {
-                    System.out.println("Connection to Solace broker lost!" + cause.getMessage());
+                    System.out.println("Connection to Solace messaging lost!" + cause.getMessage());
                     latch.countDown();
                 }
 
@@ -84,6 +94,7 @@ public class TopicSubscriber {
             // Subscribe client to the topic filter and a QoS level of 0
             System.out.println("Subscribing client to topic: " + subTopic);
             mqttClient.subscribe(subTopic, 0);
+            System.out.println("Subscribed");
 
             // Wait for the message to be received
             try {
@@ -109,12 +120,11 @@ public class TopicSubscriber {
 
     public static void main(String[] args) {
         // Check command line arguments
-        if (args.length < 1) {
-            System.out.println("Usage: TopicSubscriber <msg_backbone_ip:port>");
+        if (args.length != 3) {
+            System.out.println("Usage: topicSubscriber <host:port> <client-username> <client-password>");
+            System.out.println();
             System.exit(-1);
         }
-        
-        TopicSubscriber app = new TopicSubscriber();
-		app.run(args);
+        new TopicSubscriber().run(args);
     }
 }

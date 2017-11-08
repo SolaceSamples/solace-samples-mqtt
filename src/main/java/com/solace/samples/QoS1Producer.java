@@ -34,14 +34,24 @@ public class QoS1Producer {
     public void run(String... args) {
         System.out.println("QoS1Producer initializing...");
 
+        String host = args[0];
+        String username = args[1];
+        String password = args[2];
+
+        if (!host.startsWith("tcp://")) {
+            host = "tcp://" + host;
+        }
+
         try {
             // Create an Mqtt client
-            MqttClient mqttClient = new MqttClient("tcp://" + args[0], "HelloWorldQoS1Producer");
+            MqttClient mqttClient = new MqttClient(host, "HelloWorldQoS1Producer");
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
+            connOpts.setUserName(username);
+            connOpts.setPassword(password.toCharArray());
 
             // Connect the client
-            System.out.println("Connecting to Solace broker: tcp://" + args[0]);
+            System.out.println("Connecting to Solace messaging at " + host);
             mqttClient.connect(connOpts);
             System.out.println("Connected");
 
@@ -75,8 +85,9 @@ public class QoS1Producer {
 
     public static void main(String[] args) {
         // Check command line arguments
-        if (args.length < 1) {
-            System.out.println("Usage: QoS1Producer <msg_backbone_ip:port>");
+        if (args.length != 3) {
+            System.out.println("Usage: QoS1Producer <host:port> <client-username> <client-password>");
+            System.out.println();
             System.exit(-1);
         }
 
