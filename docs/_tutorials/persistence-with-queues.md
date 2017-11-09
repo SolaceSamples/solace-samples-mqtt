@@ -3,32 +3,42 @@ layout: tutorials
 title: Persistence with Queues
 summary: Learn how to set up persistence for guaranteed delivery.
 icon: I_dev_Persistent.svg
+links:
+    - label: QoS1Producer.java
+      link: /blob/master/src/main/java/com/solace/samples/QoS1Producer.java
+    - label: QoS1Consumer.java
+      link: /blob/master/src/main/java/com/solace/samples/QoS1Consumer.java
+      
 ---
 
 This tutorial builds on the basic concepts introduced in the [publish/subscribe tutorial]({{ site.baseurl }}/publish-subscribe), and will show you how to send
-and receive QoS 1 messages using a Solace router.
+and receive QoS 1 messages using Solace messaging.
 
 ## Assumptions
 
 This tutorial assumes the following:
 
 *   You are familiar with Solace [core concepts]({{ site.docs-core-concepts }}){:target="_top"}.
-*   You have access to a running Solace message router with the following configuration:
-    *   Enabled message VPN
-    *   Enabled client username
+*   You have access to Solace messaging with the following configuration details:
+    *   Connectivity information for a Solace message-VPN configured for guaranteed messaging support
+    *   Enabled client username and password
     *   Client-profile enabled with guaranteed messaging permissions.
-    *   Enabled MQTT service on port 1883
+    *   Enabled MQTT service
 
-One simple way to get access to a Solace message router is to start a Solace VMR load [as outlined here]({{ site.docs-vmr-setup }}){:target="_top"}. By default the Solace VMR will run with the “default” message VPN configured and ready for messaging and the MQTT service enabled on port 1883. Going forward, this tutorial assumes that you are using the Solace VMR. If you are using a different Solace message router configuration, adapt the instructions to match your configuration.
+{% if jekyll.environment == 'solaceCloud' %}
+One simple way to get access to Solace messaging quickly is to create a messaging service in Solace Cloud [as outlined here]({{ site.links-solaceCloud-setup}}){:target="_top"}. You can find other ways to get access to Solace messaging on the [home page]({{ site.baseurl }}/) of these tutorials.
+{% else %}
+One simple way to get access to a Solace message router is to start a Solace VMR load [as outlined here]({{ site.docs-vmr-setup }}){:target="_top"}. By default the Solace VMR will with the “default” message VPN configured and ready for guaranteed messaging. Going forward, this tutorial assumes that you are using the Solace VMR. If you are using a different Solace message router configuration adapt the tutorial appropriately to match your configuration.
 
 You can learn more details on enabling MQTT service on a Solace message router by referring to the [Solace Docs - Using MQTT]({{ site.docs-using-mqtt }}){:target="_top"}.
+{% endif %}
 
 ## Goals
 
 The goal of this tutorial is to understand the following:
 
-1.  How to send a QoS 1 message to a Solace message router.
-2.  How to receive a QoS 1 message from a Soalce message rotuer.
+1.  How to send a QoS 1 message to Solace messaging.
+2.  How to receive a QoS 1 message from Solace messaging.
 
 ## MQ Telemetry Transport (MQTT) Introduction
 
@@ -37,35 +47,18 @@ MQTT is a standard lightweight protocol for sending and receiving messages. As s
 1. [http://mqtt.org/](http://mqtt.org/){:target="_blank"}
 2. [https://www.eclipse.org/paho/](https://www.eclipse.org/paho/){:target="_blank"}
 
-## Solace message router properties
+{% if jekyll.environment == 'solaceCloud' %}
+  {% include solaceMessaging-cloud.md %}
+{% else %}
+    {% include solaceMessaging.md %}
+{% endif %}  
+{% include mqttApi.md %}
 
-As with other tutorials, this tutorial will connect to the default message VPN of a Solace VMR which has authentication disabled. So the only required information to proceed is the Solace VMR host string which this tutorial accepts as an argument.
+## Connecting a session to Solace messaging
 
-## Obtaining an MQTT Client Library
+The simplest way to connect to a Solace messaging in MQTT is to use an 'MqttClient', as done with other tutorials. So connect the 'MqttClient' as outlined in the [publish/subscribe tutorial]({{ site.baseurl }}/publish-subscribe).
 
-Although, you can use any MQTT Client library of your choice to connect to Solace, this tutorial uses the Paho Java Client library. Here are a few easy ways to get the Paho API. The instructions in the Building section assume you're using Gradle and pulling the jars from maven central. If your environment differs then adjust the build instructions appropriately.
-
-### Get the API: Using Gradle
-
-```
-    compile("org.eclipse.paho:org.eclipse.paho.client.mqttv3:{{ site.paho_version }}")
-```
-
-### Get the API: Using Maven
-
-```
-<dependency>
-  <groupId>org.eclipse.paho</groupId>
-  <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
-  <version>{{ site.paho_version }}</version>
-</dependency>
-```
-
-## Connecting a session to the message router
-
-The simplest way to connect to a Solace message router in MQTT is to use an 'MqttClient', as done with other tutorials. So connect the 'MqttClient' as outlined in the [publish/subscribe tutorial]({{ site.baseurl }}/publish-subscribe).
-
-NOTE: If you use the default 'MqttConnectOptions', or set 'MqttConnectOptions.cleanSession' to 'true', as done in the publish/subscribe tutorial, then a Non-Durable (a.k.a. Temporary Endpoint) queue will automatically be created on the Solace message router when the client adds a QoS 1 subscription. Queues are used to store QoS 1 messages providing persistence for the 'MqttClient'. A Non-Durable queue is removed when the 'MqttClient' disconnects, which mean the Solace message router will not retain any messages for the client after it disconnects. Setting the 'MqttConnectOptions.cleanSession' to 'false' will create a Durable queue which will retain messages even after the client disconnects. You can learn more about Solace queue durability from the Endpoint Durability section of [Solace Features – Working with Guaranteed Messages]({{ site.docs-gm-feature }}){:target="_top"}.
+NOTE: If you use the default 'MqttConnectOptions', or set 'MqttConnectOptions.cleanSession' to 'true', as done in the publish/subscribe tutorial, then a Non-Durable (a.k.a. Temporary Endpoint) queue will automatically be created on Solace messaging when the client adds a QoS 1 subscription. Queues are used to store QoS 1 messages providing persistence for the 'MqttClient'. A Non-Durable queue is removed when the 'MqttClient' disconnects, which mean Solace messaging will not retain any messages for the client after it disconnects. Setting the 'MqttConnectOptions.cleanSession' to 'false' will create a Durable queue which will retain messages even after the client disconnects. You can learn more about Solace queue durability from the Endpoint Durability section of [Solace Features – Working with Guaranteed Messages]({{ site.docs-gm-feature }}){:target="_top"}.
 
 For the purpose of this tutorial and to clean up resources and state 'MqttConnectOptions.cleanSession' is set to 'true'.
 
@@ -119,7 +112,7 @@ Now it is time to send a QoS 1 message to the subscriber.
   <img src="{{ site.baseurl }}/images/sending-message-to-queue-300x160.png"/>
 </div>
 
-You must first connect an 'MqttClient' as outlined above in the “Connecting a session to the message router” section. To send a message, you must create a message using the 'MqttMessage' class and set the QoS level. This tutorial will send a message to topic '“Q/tutorial”' with contents “Hello world from MQTT!” and a QoS level of 1, which are at least once delivery messages or Persistent messages in Solace. With a QoS level to 1 set on the message the client will receive acknowledgments from the Solace message router when it has successfully stored the message.
+You must first connect an 'MqttClient' as outlined above in the “Connecting a session to Solace messaging” section. To send a message, you must create a message using the 'MqttMessage' class and set the QoS level. This tutorial will send a message to topic '“Q/tutorial”' with contents “Hello world from MQTT!” and a QoS level of 1, which are at least once delivery messages or Persistent messages in Solace. With a QoS level to 1 set on the message the client will receive acknowledgments from Solace messaging when it has successfully stored the message.
 
 We then use the MQTT client created earlier to publish the message
 
@@ -129,14 +122,17 @@ message.setQos(1);
 mqttClient.publish("Q/tutorial", message);
 ~~~
 
-At this point the producer has sent a message to the Solace message router which gets in the Solace message router spool and your waiting consumer will have received the message and printed its contents to the screen.
+At this point the producer has sent a message to Solace messaging which gets in the Solace messaging spool and your waiting consumer will have received the message and printed its contents to the screen.
 
 ## Summarizing
 
 The full source code for this example is available on [GitHub]({{ site.repository }}){:target="_blank"}. Combining the example source code show above results in the following source files:
 
-*   [QoS1Producer.java]({{ site.repository }}/blob/master/src/main/java/com/solace/samples/QoS1Producer.java){:target="_blank"}
-*   [QoS1Consumer.java]({{ site.repository }}/blob/master/src/main/java/com/solace/samples/QoS1Consumer.java){:target="_blank"}
+<ul>
+{% for item in page.links %}
+<li><a href="{{ site.repository }}{{ item.link }}" target="_blank">{{ item.label }}</a></li>
+{% endfor %}
+</ul>
 
 ## Getting the Source
 
@@ -159,12 +155,12 @@ This builds all of the Java Samples with OS specific launch scripts. The files a
 
 ## Sample Output
 
-If you start the 'QoS1Consumer' with a single argument for the Solace message router host address it will connect and wait for a message. Replace HOST with the host address of your Solace VMR.
+If you start the 'QoS1Consumer' with arguments specifying your Solace messaging connection details, it will connect and wait for a message.
 
 ~~~shell
-$ ./build/staged/bin/QoS1Consumer <HOST>
+$ ./build/staged/bin/QoS1Consumer <host:port> <client-username> <client-password>
 QoS1Consumer initializing...
-Connecting to Solace broker: tcp://HOST
+Connecting to Solace messaging at <host:port>
 Connected
 Subscribing client to topic: Q/tutorial
 Subscribed with OoS level 1 and waiting to receive msgs
@@ -178,12 +174,12 @@ Received a Message!
 Exiting
 ~~~
 
-Then you can send a message using the 'QoS1Producer' again using a single argument to specify the Solace message router HOST address. If successful, the output for the producer will look like the following:
+Then you can send a message using the 'QoS1Producer' with the same arguments. If successful, the output for the producer will look like the following:
 
 ~~~shell
-$ ./build/staged/bin/QoS1Producer <HOST>
+$ ./build/staged/bin/QoS1Producer <host:port> <client-username> <client-password>
 QoS1Producer initializing...
-Connecting to Solace broker: tcp://HOST
+Connecting to Solace messaging at <host:port>
 Connected
 Publishing message: Hello world from MQTT!
 Message published. Exiting

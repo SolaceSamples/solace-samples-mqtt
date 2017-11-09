@@ -43,14 +43,24 @@ public class BasicReplier {
     public void run(String... args) {
         System.out.println("BasicReplier initializing...");
 
+        String host = args[0];
+        String username = args[1];
+        String password = args[2];
+
+        if (!host.startsWith("tcp://")) {
+            host = "tcp://" + host;
+        }
+
         try {
             // Create an Mqtt client
-            final MqttClient mqttClient = new MqttClient("tcp://" + args[0], "HelloWorldBasicReplier");
+            final MqttClient mqttClient = new MqttClient(host, "HelloWorldBasicReplier");
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
+            connOpts.setUserName(username);
+            connOpts.setPassword(password.toCharArray());
             
             // Connect the client
-            System.out.println("Connecting to Solace broker: tcp://" + args[0]);
+            System.out.println("Connecting to Solace messaging at " + host);
             mqttClient.connect(connOpts);
             System.out.println("Connected");
 
@@ -106,7 +116,7 @@ public class BasicReplier {
                 }
 
                 public void connectionLost(Throwable cause) {
-                    System.out.println("Connection to Solace broker lost!" + cause.getMessage());
+                    System.out.println("Connection to Solace messaging lost!" + cause.getMessage());
                     latch.countDown();
                 }
 
@@ -144,12 +154,11 @@ public class BasicReplier {
 
     public static void main(String[] args) {
         // Check command line arguments
-        if (args.length < 1) {
-            System.out.println("Usage: BasicReplier <msg_backbone_ip:port>");
+        if (args.length != 3) {
+            System.out.println("Usage: basicReplier <host:port> <client-username> <client-password>");
+            System.out.println();
             System.exit(-1);
         }
-        
-        BasicReplier app = new BasicReplier();
-		app.run(args);
+        new BasicReplier().run(args);
     }
 }

@@ -42,8 +42,7 @@ task createAllStartScripts() << {
 				 'topicSubscriber':'com.solace.samples.TopicSubscriber',
 				 'basicRequestor':'com.solace.samples.BasicRequestor',
 				 'basicReplier':'com.solace.samples.BasicReplier',
-				 'confirmedPublish':'com.solace.samples.ConfirmedPublish',
-				 'topicToQueueMapping':'com.solace.samples.TopicToQueueMapping',
+				 'confirmedPublish':'com.solace.samples.ConfirmedDeliveryProducer',
  			     'QoS1Producer':'com.solace.samples.QoS1Producer',
     			 'QoS1Consumer':'com.solace.samples.QoS1Consumer'
 ]

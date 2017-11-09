@@ -40,14 +40,23 @@ public class QoS1Consumer {
     public void run(String... args) {
         System.out.println("QoS1Consumer initializing...");
 
+        String host = args[0];
+        String username = args[1];
+        String password = args[2];
+
+        if (!host.startsWith("tcp://")) {
+            host = "tcp://" + host;
+        }
         try {
             // Create an Mqtt client
-            MqttAsyncClient mqttClient = new MqttAsyncClient("tcp://" + args[0], "HelloWorldQoS1Consumer");
+            MqttAsyncClient mqttClient = new MqttAsyncClient(host, "HelloWorldQoS1Consumer");
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
+            connOpts.setUserName(username);
+            connOpts.setPassword(password.toCharArray());
 
             // Connect the client
-            System.out.println("Connecting to Solace broker: tcp://" + args[0]);
+            System.out.println("Connecting to Solace messaging at " + host);
             IMqttToken conToken = mqttClient.connect(connOpts);
             conToken.waitForCompletion(10000);
             if (!conToken.isComplete() || conToken.getException() != null) {
@@ -75,7 +84,7 @@ public class QoS1Consumer {
                 }
 
                 public void connectionLost(Throwable cause) {
-                    System.out.println("Connection to Solace broker lost!" + cause.getMessage());
+                    System.out.println("Connection to Solace messaging lost!" + cause.getMessage());
                     latch.countDown();
                 }
 
@@ -125,12 +134,12 @@ public class QoS1Consumer {
 
     public static void main(String[] args) {
         // Check command line arguments
-        if (args.length < 1) {
-            System.out.println("Usage: QoS1Consumer <msg_backbone_ip:port>");
+        if (args.length != 3) {
+            System.out.println("Usage: QoS1Consumer <host:port> <client-username> <client-password>");
+            System.out.println();
             System.exit(-1);
         }
 
-        QoS1Consumer app = new QoS1Consumer();
-        app.run(args);
+        new QoS1Consumer().run(args);
     }
 }

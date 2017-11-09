@@ -18,7 +18,7 @@ If you have a durable queue named “Q”, it will receive messages published di
 
 ## Topic to Queue Mapping and MQTT
 
-MQTT is a standard wireline protocol with a design goal of being a light weight publish/subscribe protocol. MQTT inherently supports this feature via QoS 1 subscriptions. There is nothing further applications need to do to directly take advantage of the Solace Topic to Queue Mapping feature. However, the Solace message router support for QoS 1 subscriptions inherently takes advantage of this feature to provide the QoS 1 MQTT service. Simply follow steps outlined in the [Persistence Tutorial]({{ site.baseurl }}/persistence-with-queues) for QoS 1 messaging and MQTT clients are using this feature under the covers.
+MQTT is a standard wireline protocol with a design goal of being a light weight publish/subscribe protocol. MQTT inherently supports this feature via QoS 1 subscriptions. There is nothing further applications need to do to directly take advantage of the Solace Topic to Queue Mapping feature. However, Solace messaging support for QoS 1 subscriptions inherently takes advantage of this feature to provide the QoS 1 MQTT service. Simply follow steps outlined in the [Persistence Tutorial]({{ site.baseurl }}/persistence-with-queues) for QoS 1 messaging and MQTT clients are using this feature under the covers.
 
 ## Summarizing
 

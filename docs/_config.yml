@@ -10,6 +10,7 @@ paho_version: 1.1.0
 
 # Links
 links-community: http://dev.solace.com/community/
+links-solaceCloud-setup: http://cloud.solace.com/create-messaging-service/
 docs-vmr-setup: http://docs.solace.com/Solace-VMR-Set-Up/Setting-Up-VMRs.htm
 docs-core-concepts: http://docs.solace.com/Features/Core-Concepts.htm
 docs-using-mqtt: http://docs.solace.com/Features/Using-MQTT.htm
