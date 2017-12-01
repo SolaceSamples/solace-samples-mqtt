@@ -140,7 +140,7 @@ Clone the GitHub repository containing the Solace samples.
 
 ~~~shell
 git clone {{ site.repository }}
-cd {{ site.baseurl | remove: '/'}}
+cd {{ site.repository | split: '/' | last }}
 ~~~
 
 ## Building
