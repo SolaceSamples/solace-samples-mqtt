@@ -18,7 +18,6 @@ docs-ops-behavior: http://docs.solace.com/MQTT-311-Prtl-Conformance-Spec/Operati
 docs-gm-feature: http://docs.solace.com/Features/Working-With-Guaranteed-Messages.htm
 docs-topic-queue: http://docs.solace.com/Features/Core-Concepts.htm#topic-queue-mapping
 docs-managing-mqtt: http://docs.solace.com/Configuring-and-Managing-Routers/Managing-MQTT-Messaging.htm
-
 solace-apis-dev:
   - value: http://dev.solace.com/get-started/c-tutorials/
     name: C
@@ -26,6 +25,8 @@ solace-apis-dev:
     name: C#/.NET
   - value: http://dev.solace.com/get-started/java-tutorials/
     name: Java
+  - value: http://dev.solace.com/get-started/java-rto-tutorials/
+    name: Java RTO
   - value: http://dev.solace.com/get-started/javascript-tutorials/
     name: JavaScript
   - value: http://dev.solace.com/get-started/node-js-tutorials/
@@ -60,6 +61,8 @@ solace-apis-cloud:
     name: C#/.NET
   - value: http://cloud.solace.com/samples/solace-samples-java/
     name: Java
+  - value: http://cloud.solace.com/samples/solace-samples-javarto/
+    name: Java RTO
   - value: http://cloud.solace.com/samples/solace-samples-javascript/
     name: JavaScript
   - value: http://cloud.solace.com/samples/solace-samples-nodejs/
