@@ -22,13 +22,7 @@ This tutorial assumes the following:
     *   Enabled client username and password
     *   Enabled MQTT services
 
-{% if jekyll.environment == 'solaceCloud' %}
 One simple way to get access to Solace messaging quickly is to create a messaging service in Solace Cloud [as outlined here]({{ site.links-solaceCloud-setup}}){:target="_top"}. You can find other ways to get access to Solace messaging below.
-{% else %}
-One simple way to get access to a Solace message router is to start a Solace VMR load [as outlined here]({{ site.docs-vmr-setup }}){:target="_top"}. By default the Solace VMR will with the “default” message VPN configured and ready for guaranteed messaging. Going forward, this tutorial assumes that you are using the Solace VMR. If you are using a different Solace message router configuration adapt the tutorial appropriately to match your configuration.
-
-You can learn more details on enabling MQTT service on a Solace message router by referring to the [Solace Docs - Using MQTT]({{ site.docs-using-mqtt }}){:target="_top"}.
-{% endif %}
 
 ## Goals
 
@@ -44,11 +38,7 @@ MQTT is a standard lightweight protocol for sending and receiving messages. As s
 1.  [http://mqtt.org/](http://mqtt.org/){:target="_blank"}
 2.  [https://www.eclipse.org/paho/](https://www.eclipse.org/paho/){:target="_blank"}
 
-{% if jekyll.environment == 'solaceCloud' %}
-  {% include solaceMessaging-cloud.md %}
-{% else %}
-    {% include solaceMessaging.md %}
-{% endif %}  
+{% include solaceMessaging.md %}
 {% include mqttApi.md %}
 
 ## Connecting to the Solace Messaging
@@ -167,7 +157,7 @@ This builds all of the Java Samples with OS specific launch scripts. The files a
 
 ### Running the Sample
 
-If you start the `topicSubscriber` with arguments specifying your Solace messaging connection details, it will connect and wait for a message. 
+If you start the `topicSubscriber` with arguments specifying your Solace messaging connection details, it will connect and wait for a message.
 
 ```
 $ ./build/staged/bin/topicSubscriber <host:port> <client-username> <client-password>
