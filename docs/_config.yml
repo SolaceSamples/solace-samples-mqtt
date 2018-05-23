@@ -9,6 +9,8 @@ repository: https://github.com/SolaceSamples/solace-samples-mqtt
 paho_version: 1.1.0
 
 # Links
+hostname: solacecloud.staging.wpengine.com
+dev-hostname: solacesystems2.staging.wpengine.com
 links-community: //dev.solace.com/community/
 links-solaceCloud-setup: //cloud.solace.com/create-messaging-service/
 docs-vmr-setup: //docs.solace.com/Solace-VMR-Set-Up/Setting-Up-VMRs.htm
