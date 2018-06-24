@@ -38,8 +38,8 @@ MQTT is a standard lightweight protocol for sending and receiving messages. As s
 1.  [http://mqtt.org/](http://mqtt.org/){:target="_blank"}
 2.  [https://www.eclipse.org/paho/](https://www.eclipse.org/paho/){:target="_blank"}
 
-{% include solaceMessaging.md %}
-{% include mqttApi.md %}
+{% include_relative assets/solaceMessaging.md %}
+{% include_relative assets/mqttApi.md %}
 
 ## Connecting to the Solace Messaging
 
@@ -114,7 +114,7 @@ try {
 
 Now it is time to send a message to the waiting consumer.
 
-![pub-sub-sending-message]({{ site.baseurl }}/images/pub-sub-sending-message-300x134.png){:target="_top"}
+![pub-sub-sending-message]({{ site.baseurl }}/assets/images/pub-sub-sending-message-300x134.png){:target="_top"}
 
 To send a message, you must create a message using the MqttMessage class and set the QoS level. This tutorial will send a message to topic "T/GettingStarted/pubsub" with contents "Hello world from MQTT!" and a QoS level of 0, which are at most once delivery messages. We then use the MQTT client created earlier to publish the message
 
