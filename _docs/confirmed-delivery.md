@@ -29,8 +29,8 @@ The goal of this tutorial is to understand the following:
 
 1.  How to properly handle QoS 1 message acknowledgments on message send
 
-{% include solaceMessaging.md %}
-{% include mqttApi.md %}
+{% include_relative assets/solaceMessaging.md %}
+{% include_relative assets/mqttApi.md %}
 
 ## Connecting a session to Solace messaging
 

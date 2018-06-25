@@ -1,0 +1,19 @@
+# Site settings
+title: Solace Samples MQTT
+summary: These tutorials get you up to speed sending and receiving messages with Solace technology.
+baseurl: "/solace-samples-mqtt" # the subpath of your site, e.g. /solace-samples-java
+repository: https://github.com/SolaceSamples/solace-samples-mqtt
+
+# Also see _includes/intro.html to customize the description which gets included in index.html.
+
+paho_version: 1.1.0
+
+# Links
+links-community: //dev.solace.com/community/
+links-solaceCloud-setup: //cloud.solace.com/create-messaging-service/
+docs-core-concepts: //docs.solace.com/Features/Core-Concepts.htm
+docs-using-mqtt: //docs.solace.com/Features/Using-MQTT.htm
+docs-ops-behavior: //docs.solace.com/MQTT-311-Prtl-Conformance-Spec/Operational%20behavior.htm
+docs-gm-feature: //docs.solace.com/Features/Working-With-Guaranteed-Messages.htm
+docs-topic-queue: //docs.solace.com/Features/Core-Concepts.htm#topic-queue-mapping
+docs-managing-mqtt: //docs.solace.com/Configuring-and-Managing-Routers/Managing-MQTT-Messaging.htm

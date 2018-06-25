@@ -56,7 +56,7 @@ For request-response messaging to be successful it must be possible for the requ
 
 The second requirement is to be able to detect the reply message from the stream of incoming messages. This is accomplished by adding a correlation-id field. Repliers can include the same correlation-id in a reply message to allow the requestor to detect the corresponding reply. The figure below outlines this exchange.
 
-![]({{ site.baseurl }}/images/Request-Reply_diagram-1.png)
+![]({{ site.baseurl }}/assets/images/Request-Reply_diagram-1.png)
 
 In this tutorial the payload of both the request and reply messages are formatted to JSON in order to add the reply-to field, the correlation-id field, and the message contents. You can use any payload format which both the requestor and replier understand, but for the purpose of this tutorial we choose JSON to structure the payload of the message and keep the tutorial simple. This tutorial will use the JSON-Simple Java library to both construct and parse the payload in JSON. The section below can be added to your pom.xml to configure the JSON-Simple dependency.
 
@@ -73,8 +73,8 @@ In this tutorial the payload of both the request and reply messages are formatte
 </project>
 ```
 
-{% include solaceMessaging.md %}
-{% include mqttApi.md %}
+{% include_relative assets/solaceMessaging.md %}
+{% include_relative assets/mqttApi.md %}
 
 ## Connecting a Session to Solace Messaging
 
@@ -84,7 +84,7 @@ This tutorial builds on the `TopicPublisher` introduced in Publish-Subscribe wit
 
 First let’s look at the requestor. This is the application that will send the initial request message and wait for the reply.
 
-![]({{ site.baseurl }}/images/Request-Reply_diagram-2.png)
+![]({{ site.baseurl }}/assets/images/Request-Reply_diagram-2.png)
 
 The requestor must obtain the unique reply-to topic. Using Solace Messaging, this can be accomplished by adding a subscription to the designated special topic `“$SYS/client/reply-to”`. The reply-to topic is received asynchronously through callbacks. These callbacks are defined in MQTT by the `MqttCallback` interface. The same callback is also used to receive the actual reply message. In order to distinguish between the two messages we inspect the topic string provided in the `MqttCallback.messageArrived` method.
 
@@ -163,7 +163,7 @@ try {
 
 Now it is time to receive the request and generate an appropriate reply.  
 
-![]({{ site.baseurl }}/images/Request-Reply_diagram-3.png)
+![]({{ site.baseurl }}/assets/images/Request-Reply_diagram-3.png)
 
 
 Similar to the requestor, an `MqttClient` is created and connected to Solace messaging. Request messages are received asynchronously through callback defined by the `MqttCallback` interface. When a request message is received, the replier parses the payload of the message to a JSON object, constructs a reply message and adds the correlation-id field retrieved from the request payload. The reply message is published to the reply-to topic found in the body of the request message.
