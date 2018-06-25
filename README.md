@@ -16,7 +16,7 @@ The "Getting Started" tutorials will get you up to speed and sending messages wi
 
 ## Contents
 
-This repository contains code and matching tutorial walk throughs for different basic scenarios. It is best to view the associated [tutorials home page](https://solacesamples.github.io/solace-samples-mqtt/).
+This repository contains code and matching tutorial walk throughs for different basic scenarios. It is best to view the associated [tutorials home page](https://dev.solace.com/samples/solace-samples-mqtt/).
 
 ## Prerequisites
 
@@ -32,7 +32,7 @@ To try individual samples, build the project from source and then run samples li
 
     ./build/staged/bin/topicPublisher <HOST>
 
-See the individual tutorials linked from the [tutorials home page](https://solacesamples.github.io/solace-samples-mqtt/) for full details which can walk you through the samples, what they do, and how to correctly run them to explore MQTT.
+See the individual tutorials linked from the [tutorials home page](https://dev.solace.com/samples/solace-samples-mqtt/) for full details which can walk you through the samples, what they do, and how to correctly run them to explore MQTT.
 
 ## Exploring the Samples
 
