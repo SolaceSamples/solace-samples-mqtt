@@ -40,9 +40,6 @@ public class ConfirmedDeliveryProducer {
         String username = args[1];
         String password = args[2];
 
-        if (!host.startsWith("tcp://")) {
-            host = "tcp://" + host;
-        }
         try {
             // Create an Mqtt client
             MqttClient mqttClient = new MqttClient(host, "ConfirmedDeliveryProducer");
