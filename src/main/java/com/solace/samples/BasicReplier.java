@@ -47,10 +47,6 @@ public class BasicReplier {
         String username = args[1];
         String password = args[2];
 
-        if (!host.startsWith("tcp://")) {
-            host = "tcp://" + host;
-        }
-
         try {
             // Create an Mqtt client
             final MqttClient mqttClient = new MqttClient(host, "HelloWorldBasicReplier");
