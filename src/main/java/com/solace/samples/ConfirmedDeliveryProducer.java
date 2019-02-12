@@ -111,7 +111,7 @@ public class ConfirmedDeliveryProducer {
 
 // Check command line arguments
         if (args.length != 3) {
-            System.out.println("Usage: confirmedPublish <host:port> <client-username> <client-password>");
+            System.out.println("Usage: confirmedPublish tcp://<host:port> <client-username> <client-password>");
             System.out.println();
             System.exit(-1);
         }

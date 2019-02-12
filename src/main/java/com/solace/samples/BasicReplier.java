@@ -151,7 +151,7 @@ public class BasicReplier {
     public static void main(String[] args) {
         // Check command line arguments
         if (args.length != 3) {
-            System.out.println("Usage: basicReplier <host:port> <client-username> <client-password>");
+            System.out.println("Usage: basicReplier tcp://<host:port> <client-username> <client-password>");
             System.out.println();
             System.exit(-1);
         }

@@ -25,11 +25,10 @@ import java.util.concurrent.CountDownLatch;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.eclipse.paho.client.mqttv3.MqttAsyncClient;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
-import org.eclipse.paho.client.mqttv3.MqttCallback;
 
 /**
  * A Mqtt QoS1 message consumer
@@ -132,7 +131,7 @@ public class QoS1Consumer {
     public static void main(String[] args) {
         // Check command line arguments
         if (args.length != 3) {
-            System.out.println("Usage: QoS1Consumer <host:port> <client-username> <client-password>");
+            System.out.println("Usage: QoS1Consumer tcp://<host:port> <client-username> <client-password>");
             System.out.println();
             System.exit(-1);
         }

@@ -30,7 +30,7 @@ There are no prerequisites.
 
 To try individual samples, build the project from source and then run samples like the following:
 
-    ./build/staged/bin/topicPublisher <HOST>
+    ./build/staged/bin/topicPublisher tcp://<HOST>:<PORT> <client-username> <client-password>
 
 See the individual tutorials linked from the [tutorials home page](https://dev.solace.com/samples/solace-samples-mqtt/) for full details which can walk you through the samples, what they do, and how to correctly run them to explore MQTT.
 
