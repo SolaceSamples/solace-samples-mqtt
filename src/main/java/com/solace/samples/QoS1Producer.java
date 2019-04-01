@@ -23,6 +23,7 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 /**
  * A Mqtt QoS1 message producer 
@@ -81,7 +82,7 @@ public class QoS1Producer {
     public static void main(String[] args) {
         // Check command line arguments
         if (args.length != 3) {
-            System.out.println("Usage: QoS1Producer tcp://<host:port> <client-username> <client-password>");
+            System.out.println("Usage: QoS1Producer <host:port> <client-username> <client-password>");
             System.out.println();
             System.exit(-1);
         }

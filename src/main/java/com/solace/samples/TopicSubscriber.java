@@ -23,11 +23,12 @@ import java.sql.Timestamp;
 import java.util.concurrent.CountDownLatch;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
-import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
 
 /**
  * A Mqtt topic subscriber
@@ -116,7 +117,7 @@ public class TopicSubscriber {
     public static void main(String[] args) {
         // Check command line arguments
         if (args.length != 3) {
-            System.out.println("Usage: topicSubscriber tcp://<host:port> <client-username> <client-password>");
+            System.out.println("Usage: topicSubscriber <host:port> <client-username> <client-password>");
             System.out.println();
             System.exit(-1);
         }
