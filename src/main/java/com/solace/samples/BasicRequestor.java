@@ -171,7 +171,7 @@ public class BasicRequestor {
     public static void main(String[] args) {
         // Check command line arguments
         if (args.length != 3) {
-            System.out.println("Usage: basicRequestor <host:port> <client-username> <client-password>");
+            System.out.println("Usage: basicRequestor tcp://<host:port> <client-username> <client-password>");
             System.out.println();
             System.exit(-1);
         }
