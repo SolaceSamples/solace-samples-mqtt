@@ -58,7 +58,7 @@ For the purpose of this tutorial and to clean up resources and state 'MqttConnec
 First connect and subscribe to receive the messages sent to a QoS 1 subscription.
 
 <div style="float: right">
-  <img src="{{ site.baseurl }}/assets/images/receiving-message-from-queue-300x160.png"/>
+  <img src="{{ site.baseurl }}/assets/images/receiving-message-from-queue-300x160.png" alt="Receiving MQTT QoS 1 Message" />
 </div>
 
 This tutorial uses Quality of Service (QoS) level of 1 (equivalent to Solace “Guaranteed” or “Persistent” messages), which are at least once delivery messages. So first, let’s express interest in the messages by subscribing to a topic filter.
@@ -99,7 +99,7 @@ if (subToken.getGrantedQos()[0] != 1) {
 Now it is time to send a QoS 1 message to the subscriber.
 
 <div style="float: right">
-  <img src="{{ site.baseurl }}/assets/images/sending-message-to-queue-300x160.png"/>
+  <img src="{{ site.baseurl }}/assets/images/sending-message-to-queue-300x160.png" alt="Sending MQTT QoS 1 Message" />
 </div>
 
 You must first connect an 'MqttClient' as outlined above in the “Connecting a session to Solace messaging” section. To send a message, you must create a message using the 'MqttMessage' class and set the QoS level. This tutorial will send a message to topic '“Q/tutorial”' with contents “Hello world from MQTT!” and a QoS level of 1, which are at least once delivery messages or Persistent messages in Solace. With a QoS level to 1 set on the message the client will receive acknowledgments from Solace messaging when it has successfully stored the message.
