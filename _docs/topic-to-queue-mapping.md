@@ -12,7 +12,7 @@ The goal of this tutorial is to show you how to make use of one of Solace’s ad
 In addition to spooling messages published directly to the queue, it is possible to add one or more topic subscriptions to a durable queue so that messages published to those topics are also delivered to and spooled by the queue. This is a powerful feature that enables queues to participate equally in point to point and publish / subscribe messaging models. More details about the [“Topic to Queue Mapping” feature here]({{ site.docs-topic-queue }}){:target="_top"}.
 
 The following diagram illustrates this feature.  
-<img src="{{ site.baseurl }}/assets/images/topic-to-queue-mapping-detail.png" width="500" height="206" />
+<img src="{{ site.baseurl }}/assets/images/topic-to-queue-mapping-detail.png" alt="MQTT Queue Mapping" width="500" height="206" />
 
 If you have a durable queue named “Q”, it will receive messages published directly to the queue destination named “Q”. However, it is also possible to add subscriptions to this queue in the form of topics. This example adds topics “A” and “B”. Once these subscriptions are added, the queue will start receiving messages published to the topic destinations “A” and “B”. When you combine this with the wildcard support provided by Solace topics this opens up a number of interesting use cases.
 
