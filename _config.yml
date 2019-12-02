@@ -13,7 +13,7 @@ links-community: //solace.com/support/
 links-solaceCloud-setup: //solace.com/cloud/
 docs-core-concepts: //docs.solace.com/PubSub-Basics/Core-Concepts.htm
 docs-using-mqtt: //docs.solace.com/Features/Using-MQTT.htm
-docs-ops-behavior: //docs.solace.com/MQTT-311-Prtl-Conformance-Spec/Operational%20behavior.htm
+docs-ops-behavior: //docs.solace.com/MQTT-311-Prtl-Conformance-Spec/Operational_behavior.htm
 docs-gm-feature: //docs.solace.com/PubSub-Basics/Guaranteed-Messages.htm
 docs-topic-queue: //docs.solace.com/PubSub-Basics/Core-Concepts.htm
 docs-managing-mqtt: //docs.solace.com/Open-APIs-Protocols/MQTT/Using-MQTT.htm
