@@ -9,11 +9,10 @@ repository: https://github.com/SolaceSamples/solace-samples-mqtt
 paho_version: 1.1.0
 
 # Links
-links-community: //solace.com/support/
-links-solaceCloud-setup: //solace.com/cloud/
-docs-core-concepts: //docs.solace.com/PubSub-Basics/Core-Concepts.htm
+links-solaceCloud-setup: //cloud.solace.com/create-messaging-service/
+docs-core-concepts: //docs.solace.com/Features/Core-Concepts.htm
 docs-using-mqtt: //docs.solace.com/Features/Using-MQTT.htm
-docs-ops-behavior: //docs.solace.com/MQTT-311-Prtl-Conformance-Spec/Operational%20behavior.htm
-docs-gm-feature: //docs.solace.com/PubSub-Basics/Guaranteed-Messages.htm
-docs-topic-queue: //docs.solace.com/PubSub-Basics/Core-Concepts.htm
-docs-managing-mqtt: //docs.solace.com/Open-APIs-Protocols/MQTT/Using-MQTT.htm
+docs-ops-behavior: //docs.solace.com/MQTT-311-Prtl-Conformance-Spec/Operational_behavior.htm
+docs-gm-feature: //docs.solace.com/Features/Working-With-Guaranteed-Messages.htm
+docs-topic-queue: //docs.solace.com/Features/Core-Concepts.htm#topic-queue-mapping
+docs-managing-mqtt: //docs.solace.com/Configuring-and-Managing-Routers/Managing-MQTT-Messaging.htm
