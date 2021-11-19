@@ -35,9 +35,6 @@ dependencies {
 	compile("com.googlecode.json-simple:json-simple:1.1.1")
 }
 
-task createAllStartScripts() << {
-     // just a placeholder
-}
   def scripts = [ 'topicPublisher':'com.solace.samples.TopicPublisher',
 				 'topicSubscriber':'com.solace.samples.TopicSubscriber',
 				 'basicRequestor':'com.solace.samples.BasicRequestor',
@@ -58,7 +55,6 @@ task createAllStartScripts() << {
             fileMode = 0755
 			duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     }
-    createAllStartScripts.dependsOn(t)
 }
 
 installDist {
