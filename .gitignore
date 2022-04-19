@@ -6,9 +6,10 @@ _site
 docs/_site
 
 # My ignore list
-.gradle/
+.gradle
 .classpath
 .project
 .settings
-build/
+build
 .idea
+bin
