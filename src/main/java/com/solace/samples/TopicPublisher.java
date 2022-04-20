@@ -16,6 +16,9 @@
 
 package com.solace.samples;
 
+import java.io.IOException;
+import java.util.UUID;
+
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -29,25 +32,26 @@ public class TopicPublisher {
 	
 	static boolean isShutdown = false;
     
-    public void run(String... args) {
+    public void run(String... args) throws IOException {
         System.out.println("TopicPublisher initializing...");
 
         String host = args[0];
         String username = args[1];
-        String password = args[2];
+        String password = "";
+        if (args.length > 2) password = args[2];
 
         try {
             // Create an Mqtt client
-            MqttClient mqttClient = new MqttClient(host, "HelloWorldPub");
+            MqttClient mqttClient = new MqttClient(host, "HelloWorldPub_" + UUID.randomUUID().toString().substring(0,8));
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
             connOpts.setUserName(username);
-            connOpts.setPassword(password.toCharArray());
+            if (args.length > 2) connOpts.setPassword(password.toCharArray());
             
             // Connect the client
             System.out.println("Connecting to Solace messaging at " + host);
             mqttClient.connect(connOpts);
-            System.out.println("Connected");
+            System.out.println("Connected.  Press [ENTER] to quit.");
 
             for (int i=0; i<100; i++) {
 	            // Create a Mqtt message
@@ -66,6 +70,7 @@ public class TopicPublisher {
 	            } catch (InterruptedException e) {
 	            	isShutdown = true;
 	            }
+	            if (System.in.available() != 0 || isShutdown) break;
             }
             // Disconnect the client
             mqttClient.disconnect();
@@ -82,10 +87,10 @@ public class TopicPublisher {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // Check command line arguments
-        if (args.length != 3) {
-            System.out.println("Usage: topicPublisher tcp://<host:port> <client-username> <client-password>");
+        if (args.length < 2) {
+            System.out.println("Usage: topicPublisher tcp://<host:port> <client-username> [client-password]");
             System.out.println();
             System.exit(-1);
         }

@@ -16,19 +16,20 @@
 
 package com.solace.samples;
 
-import java.util.concurrent.Semaphore;
 import java.util.UUID;
+import java.util.concurrent.Semaphore;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.ParseException;
-import org.json.simple.parser.JSONParser;
+//import org.json.simple.parser.ParseException;
+//import org.json.simple.parser.JSONParser;
 
 /**
  * A Mqtt basic requestor
@@ -38,9 +39,7 @@ public class BasicRequestor {
     
     // A unique Reply-To Topic for the client is obtained from Solace
     private String replyToTopic = "";
-    
-    private JSONParser parser = new JSONParser();
-    
+        
     public void run(String... args) {
         System.out.println("BasicRequestor initializing...");
 
@@ -80,13 +79,11 @@ public class BasicRequestor {
                         // Received a response to our request
                         try {
                             // Parse the response payload and convert to a JSONObject
-                            Object obj = parser.parse(new String(message.getPayload()));
-                            JSONObject jsonPayload = (JSONObject) obj;
-                        
+                            JSONObject jsonPayload = new JSONObject(new String(message.getPayload()));
                             System.out.println("\nReceived a response!" +
                                     "\n\tCorrel. Id: " + (String) jsonPayload.get("correlationId") + 
                                     "\n\tMessage:    " + (String) jsonPayload.get("message") + "\n");
-                        } catch (ParseException ex) {
+                        } catch (JSONException ex) {
                             System.out.println("Exception parsing response message!");
                             ex.printStackTrace();
                         }
@@ -132,7 +129,7 @@ public class BasicRequestor {
             obj.put("correlationId", UUID.randomUUID().toString());
             obj.put("replyTo", replyToTopic);
             obj.put("message", "Sample Request");
-            String reqPayload = obj.toJSONString();
+            String reqPayload = obj.toString();
             
             // Create a request message and set the request payload
             MqttMessage reqMessage = new MqttMessage(reqPayload.getBytes());

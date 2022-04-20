@@ -50,7 +50,7 @@ public class TopicSubscriber {
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
             connOpts.setUserName(username);
-            connOpts.setPassword(password.toCharArray());
+            if (args.length > 2) connOpts.setPassword(password.toCharArray());
             
             // Connect the client
             System.out.println("Connecting to Solace messaging at "+host);
@@ -87,7 +87,7 @@ public class TopicSubscriber {
             // Subscribe client to the topic filter and a QoS level of 0
             System.out.println("Subscribing client to topic: " + subTopic);
             mqttClient.subscribe(subTopic, 0);
-            System.out.println("Subscribed");
+            System.out.println("Subscribed. Press [ENTER] to quit.");
 
             // Wait for the message to be received
             
@@ -115,7 +115,7 @@ public class TopicSubscriber {
 
     public static void main(String[] args) throws IOException {
         // Check command line arguments
-        if (args.length < 3) {
+        if (args.length < 2) {
             System.out.println("Usage: topicSubscriber tcp://<host:port> <client-username> [client-password]");
             System.out.println();
             System.exit(-1);
