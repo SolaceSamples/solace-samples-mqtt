@@ -32,8 +32,10 @@ repositories {
 
 dependencies {
     implementation "org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0"
+
     //implementation "com.googlecode.json-simple:json-simple:1.1.1"
     implementation group: 'org.json', name: 'json', version: '20211205'
+
 }
 
 tasks.withType(JavaCompile).all {
