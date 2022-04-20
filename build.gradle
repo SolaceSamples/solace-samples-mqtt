@@ -32,17 +32,25 @@ repositories {
 
 dependencies {
     implementation "org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0"
-    implementation "com.googlecode.json-simple:json-simple:1.1.1"
+
+    //implementation "com.googlecode.json-simple:json-simple:1.1.1"
+    implementation group: 'org.json', name: 'json', version: '20211205'
+
 }
 
-  def scripts = [ 'topicPublisher':'com.solace.samples.TopicPublisher',
-				 'topicSubscriber':'com.solace.samples.TopicSubscriber',
-				 'basicRequestor':'com.solace.samples.BasicRequestor',
-				 'basicReplier':'com.solace.samples.BasicReplier',
-				 'confirmedPublish':'com.solace.samples.ConfirmedDeliveryProducer',
- 			     'QoS1Producer':'com.solace.samples.QoS1Producer',
-    			 'QoS1Consumer':'com.solace.samples.QoS1Consumer'
+tasks.withType(JavaCompile).all {
+    options.compilerArgs.add("-Xlint:all")
+}
+
+def scripts = [ 'topicPublisher':'com.solace.samples.TopicPublisher',
+                'topicSubscriber':'com.solace.samples.TopicSubscriber',
+                'basicRequestor':'com.solace.samples.BasicRequestor',
+                'basicReplier':'com.solace.samples.BasicReplier',
+                'confirmedPublish':'com.solace.samples.ConfirmedDeliveryProducer',
+                'QoS1Producer':'com.solace.samples.QoS1Producer',
+                'QoS1Consumer':'com.solace.samples.QoS1Consumer'
 ]
+
   scripts.each() { scriptName, className ->
         def t = tasks.create(name: scriptName+'StartScript', type: CreateStartScripts) {
         mainClass = className

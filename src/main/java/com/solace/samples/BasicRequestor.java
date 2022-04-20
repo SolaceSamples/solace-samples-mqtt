@@ -1,37 +1,35 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright 2016-2022 Solace Corporation. All rights reserved.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package com.solace.samples;
 
-import java.util.concurrent.Semaphore;
 import java.util.UUID;
+import java.util.concurrent.Semaphore;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.ParseException;
-import org.json.simple.parser.JSONParser;
+//import org.json.simple.parser.ParseException;
+//import org.json.simple.parser.JSONParser;
 
 /**
  * A Mqtt basic requestor
@@ -41,9 +39,7 @@ public class BasicRequestor {
     
     // A unique Reply-To Topic for the client is obtained from Solace
     private String replyToTopic = "";
-    
-    private JSONParser parser = new JSONParser();
-    
+        
     public void run(String... args) {
         System.out.println("BasicRequestor initializing...");
 
@@ -83,13 +79,11 @@ public class BasicRequestor {
                         // Received a response to our request
                         try {
                             // Parse the response payload and convert to a JSONObject
-                            Object obj = parser.parse(new String(message.getPayload()));
-                            JSONObject jsonPayload = (JSONObject) obj;
-                        
+                            JSONObject jsonPayload = new JSONObject(new String(message.getPayload()));
                             System.out.println("\nReceived a response!" +
                                     "\n\tCorrel. Id: " + (String) jsonPayload.get("correlationId") + 
                                     "\n\tMessage:    " + (String) jsonPayload.get("message") + "\n");
-                        } catch (ParseException ex) {
+                        } catch (JSONException ex) {
                             System.out.println("Exception parsing response message!");
                             ex.printStackTrace();
                         }
@@ -135,7 +129,7 @@ public class BasicRequestor {
             obj.put("correlationId", UUID.randomUUID().toString());
             obj.put("replyTo", replyToTopic);
             obj.put("message", "Sample Request");
-            String reqPayload = obj.toJSONString();
+            String reqPayload = obj.toString();
             
             // Create a request message and set the request payload
             MqttMessage reqMessage = new MqttMessage(reqPayload.getBytes());
@@ -159,11 +153,10 @@ public class BasicRequestor {
 
             System.exit(0);
         } catch (MqttException me) {
-            System.out.println("reason " + me.getReasonCode());
-            System.out.println("msg " + me.getMessage());
-            System.out.println("loc " + me.getLocalizedMessage());
-            System.out.println("cause " + me.getCause());
-            System.out.println("excep " + me);
+            System.out.println("Exception:   " + me);
+            System.out.println("Reason Code: " + me.getReasonCode());
+            System.out.println("Message:     " + me.getMessage());
+            if (me.getCause() != null) System.out.println("Cause:       " + me.getCause());
             me.printStackTrace();
         }
     }
